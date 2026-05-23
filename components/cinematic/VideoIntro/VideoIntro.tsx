@@ -11,6 +11,8 @@ import {
 } from "@/lib/cinematic/config";
 import styles from "./VideoIntro.module.css";
 
+type HeroPhase = "playing" | "paused" | "ended";
+
 function IconPlay() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -45,45 +47,173 @@ function IconVolumeOff() {
   );
 }
 
-export default function VideoIntro() {
+function applyVideoMute(video: HTMLVideoElement, muted: boolean) {
+  video.muted = muted;
+  video.defaultMuted = muted;
+  if (muted) {
+    video.setAttribute("muted", "");
+  } else {
+    video.removeAttribute("muted");
+  }
+}
+
+type VideoIntroProps = {
+  /** True after the user clicks “Enter portfolio” (unlocks sound via user gesture). */
+  enabled?: boolean;
+  onRegisterStart?: (start: () => void) => void;
+};
+
+export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIntroProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoStageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const hasAutoStartedRef = useRef(false);
-  const isHoldingRef = useRef(false);
   const hasPlayedRef = useRef(false);
-  const firstNameRef = useRef<HTMLSpanElement>(null);
+  const autoplayAttemptedRef = useRef(false);
+  /** Only true when the user explicitly pressed mute — not browser autoplay policy. */
+  const userChoseMuteRef = useRef(false);
+  const firstNameRef = useRef<HTMLParagraphElement>(null);
   const lastNameRef = useRef<HTMLSpanElement>(null);
   const roleRef = useRef<HTMLParagraphElement>(null);
   const scrollRef = useRef<HTMLButtonElement>(null);
   const controlsRef = useRef<HTMLDivElement>(null);
-  const soundBadgeRef = useRef<HTMLButtonElement>(null);
 
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [phase, setPhase] = useState<HeroPhase>("playing");
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [hasFinished, setHasFinished] = useState(false);
-  const [showSoundBadge, setShowSoundBadge] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const [awaitingSoundGesture, setAwaitingSoundGesture] = useState(false);
+  const [hasVisual, setHasVisual] = useState(false);
+  const [videoError, setVideoError] = useState(false);
 
-  const syncMuteState = useCallback(() => {
+  const showPoster = phase === "paused" || phase === "ended";
+
+  const forceSoundOn = useCallback((video: HTMLVideoElement) => {
+    if (userChoseMuteRef.current) return;
+    applyVideoMute(video, false);
+    video.volume = 1;
+    setIsMuted(false);
+  }, []);
+
+  const playWithSound = useCallback(
+    (video: HTMLVideoElement) => {
+      video.loop = false;
+      video.volume = 1;
+
+      if (userChoseMuteRef.current) {
+        applyVideoMute(video, true);
+        setIsMuted(true);
+      } else {
+        forceSoundOn(video);
+      }
+
+      return video.play();
+    },
+    [forceSoundOn],
+  );
+
+  const startHeroPlayback = useCallback(() => {
     const video = videoRef.current;
-    if (!video || hasFinished) return;
-    setIsMuted(video.muted);
-  }, [hasFinished]);
+    if (!video) return;
+
+    if (!video.paused && !video.muted && phase === "playing") {
+      setIsPlaying(true);
+      setHasVisual(true);
+      return;
+    }
+
+    setPhase("playing");
+    userChoseMuteRef.current = false;
+
+    const run = (attempt: number) => {
+      forceSoundOn(video);
+      const p = playWithSound(video);
+      if (!p) return;
+
+      void p.then(
+        () => {
+          setIsPlaying(true);
+          setHasVisual(true);
+          forceSoundOn(video);
+        },
+        () => {
+          if (attempt < 4) {
+            window.setTimeout(() => run(attempt + 1), attempt * 80);
+            return;
+          }
+          applyVideoMute(video, true);
+          void video.play().then(
+            () => {
+              setIsPlaying(true);
+              setHasVisual(true);
+              forceSoundOn(video);
+            },
+            () => setIsPlaying(false),
+          );
+        },
+      );
+    };
+
+    run(0);
+  }, [forceSoundOn, phase, playWithSound]);
+
+  const replayFromStart = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    hasPlayedRef.current = false;
+    autoplayAttemptedRef.current = false;
+    userChoseMuteRef.current = false;
+    setPhase("playing");
+    video.currentTime = 0;
+    startHeroPlayback();
+  }, [startHeroPlayback]);
 
   const showPosterOnEnd = useCallback(() => {
     const video = videoRef.current;
-    if (!video || isHoldingRef.current) return;
-    isHoldingRef.current = true;
+    if (!video) return;
 
     video.pause();
-    video.muted = true;
+    setPhase("ended");
     setIsPlaying(false);
-    setIsMuted(true);
-    setHasFinished(true);
-    setShowSoundBadge(false);
   }, []);
+
+  const ensureAutoplay = useCallback(() => {
+    const video = videoRef.current;
+    if (!enabled || !video || phase !== "playing") return;
+
+    if (!video.paused) {
+      autoplayAttemptedRef.current = true;
+      setIsPlaying(true);
+      setHasVisual(true);
+      forceSoundOn(video);
+      return;
+    }
+
+    if (autoplayAttemptedRef.current) return;
+    autoplayAttemptedRef.current = true;
+    startHeroPlayback();
+  }, [enabled, forceSoundOn, phase, startHeroPlayback]);
+
+  const onVideoPlaying = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || phase !== "playing") return;
+
+    setHasVisual(true);
+    setVideoError(false);
+    setIsPlaying(true);
+    video.loop = false;
+    forceSoundOn(video);
+  }, [forceSoundOn, phase]);
+
+  useEffect(() => {
+    onRegisterStart?.(startHeroPlayback);
+  }, [onRegisterStart, startHeroPlayback]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    const video = videoRef.current;
+    if (video && video.paused) {
+      startHeroPlayback();
+    }
+  }, [enabled, startHeroPlayback]);
 
   useEffect(() => {
     const img = new Image();
@@ -92,139 +222,30 @@ export default function VideoIntro() {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !videoReady || hasFinished) return;
+    if (!video || !hasVisual || phase !== "playing") return;
 
     const onTimeUpdate = () => {
       const { duration, currentTime } = video;
       if (!duration || !Number.isFinite(duration)) return;
       if (currentTime > 0.4) hasPlayedRef.current = true;
-      if (
-        hasPlayedRef.current &&
-        currentTime >= duration - HERO_END_TRIM
-      ) {
+      if (hasPlayedRef.current && currentTime >= duration - HERO_END_TRIM) {
         showPosterOnEnd();
       }
     };
 
     video.addEventListener("timeupdate", onTimeUpdate);
     return () => video.removeEventListener("timeupdate", onTimeUpdate);
-  }, [hasFinished, videoReady, showPosterOnEnd]);
-
-  const startUnmutedPlayback = useCallback(async () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.loop = false;
-    video.volume = 1;
-    setShowSoundBadge(false);
-    setAwaitingSoundGesture(false);
-
-    const playWithSound = async () => {
-      video.muted = false;
-      setIsMuted(false);
-      await video.play();
-    };
-
-    try {
-      await playWithSound();
-      setIsPlaying(true);
-      sessionStorage.setItem("hero-audio-unlocked", "1");
-      return;
-    } catch {
-      /* direct unmuted play blocked — try muted start then unmute */
-    }
-
-    try {
-      video.muted = true;
-      await video.play();
-      video.muted = false;
-      setIsMuted(false);
-      setIsPlaying(true);
-      sessionStorage.setItem("hero-audio-unlocked", "1");
-      return;
-    } catch {
-      /* still blocked */
-    }
-
-    /* Last resort: play muted so the video is still visible */
-    try {
-      video.muted = true;
-      await video.play();
-      setIsPlaying(true);
-      setIsMuted(true);
-      setAwaitingSoundGesture(true);
-      setShowSoundBadge(true);
-    } catch {
-      setIsPlaying(false);
-    }
-  }, []);
-
-  const enableSoundAfterBlock = useCallback(async () => {
-    if (hasFinished) return;
-    await startUnmutedPlayback();
-  }, [hasFinished, startUnmutedPlayback]);
-
-  const tryInitPlayback = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || hasAutoStartedRef.current || isHoldingRef.current) return;
-    if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
-
-    hasAutoStartedRef.current = true;
-    hasPlayedRef.current = false;
-    isHoldingRef.current = false;
-    video.currentTime = 0;
-    setVideoReady(true);
-    setHasFinished(false);
-    void startUnmutedPlayback();
-  }, [startUnmutedPlayback]);
-
-  const setVideoElement = useCallback(
-    (element: HTMLVideoElement | null) => {
-      videoRef.current = element;
-      if (!element) return;
-
-      element.muted = false;
-      element.defaultMuted = false;
-      element.volume = 1;
-      element.currentTime = 0;
-
-      if (element.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-        tryInitPlayback();
-      }
-    },
-    [tryInitPlayback],
-  );
+  }, [hasVisual, phase, showPosterOnEnd]);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onReady = () => tryInitPlayback();
-
-    video.addEventListener("loadeddata", onReady);
-    video.addEventListener("canplay", onReady);
-
-    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
-      tryInitPlayback();
-    }
-
-    return () => {
-      video.removeEventListener("loadeddata", onReady);
-      video.removeEventListener("canplay", onReady);
-    };
-  }, [tryInitPlayback]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const onVolumeChange = () => {
-      if (!hasFinished) setIsMuted(video.muted);
+    const onPageShow = () => {
+      if (!enabled) return;
+      replayFromStart();
     };
 
-    video.addEventListener("volumechange", onVolumeChange);
-    return () => video.removeEventListener("volumechange", onVolumeChange);
-  }, [hasFinished, videoReady]);
+    window.addEventListener("pageshow", onPageShow);
+    return () => window.removeEventListener("pageshow", onPageShow);
+  }, [enabled, replayFromStart]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -273,69 +294,47 @@ export default function VideoIntro() {
     return () => ctx.revert();
   }, []);
 
-  useEffect(() => {
-    if (!showSoundBadge || !soundBadgeRef.current) return;
-
-    const timer = window.setTimeout(() => {
-      gsap.to(soundBadgeRef.current, {
-        opacity: 0,
-        y: -8,
-        duration: 0.7,
-        ease: "power2.inOut",
-        onComplete: () => setShowSoundBadge(false),
-      });
-    }, 6000);
-
-    return () => window.clearTimeout(timer);
-  }, [showSoundBadge]);
-
-  const togglePlay = async () => {
+  const togglePlay = (e: React.PointerEvent) => {
+    e.stopPropagation();
     const video = videoRef.current;
     if (!video) return;
 
-    if (hasFinished) {
-      isHoldingRef.current = false;
-      hasPlayedRef.current = false;
-      hasAutoStartedRef.current = false;
-      video.currentTime = 0;
-      setHasFinished(false);
-      hasAutoStartedRef.current = true;
-      await startUnmutedPlayback();
-      return;
-    }
-
-    if (isPlaying) {
+    if (phase === "playing" && isPlaying) {
       video.pause();
+      setPhase("paused");
       setIsPlaying(false);
       return;
     }
 
-    video.muted = isMuted;
-    try {
-      await video.play();
-      setIsPlaying(true);
-    } catch {
-      setIsPlaying(false);
+    if (phase === "paused") {
+      setPhase("playing");
+      if (!userChoseMuteRef.current) forceSoundOn(video);
+      else applyVideoMute(video, true);
+      void video.play().then(
+        () => setIsPlaying(true),
+        () => setIsPlaying(false),
+      );
+      return;
     }
+
+    replayFromStart();
   };
 
-  const toggleMute = async () => {
+  const onVolumePointerDown = (e: React.PointerEvent) => {
+    e.stopPropagation();
     const video = videoRef.current;
-    if (!video || hasFinished) return;
+    if (!video) return;
 
-    const next = !isMuted;
-    video.muted = next;
-    setIsMuted(next);
-    setShowSoundBadge(false);
-
-    if (!isPlaying) {
-      try {
-        await video.play();
-        setIsPlaying(true);
-      } catch {
-        /* keep paused */
-      }
+    if (video.muted || userChoseMuteRef.current) {
+      userChoseMuteRef.current = false;
+      forceSoundOn(video);
+      void video.play().then(() => setIsPlaying(true));
+      return;
     }
+
+    userChoseMuteRef.current = true;
+    applyVideoMute(video, true);
+    setIsMuted(true);
   };
 
   const scrollToNext = () => {
@@ -345,46 +344,45 @@ export default function VideoIntro() {
     });
   };
 
-  const onHeroInteract = () => {
-    if (!isPlaying && !hasFinished) {
-      hasAutoStartedRef.current = false;
-      void tryInitPlayback();
-    }
-    if (awaitingSoundGesture || showSoundBadge) {
-      void enableSoundAfterBlock();
-    }
+  const onVideoError = () => {
+    setVideoError(true);
+    setHasVisual(false);
+    setIsPlaying(false);
   };
 
+  const showFallback = !hasVisual && !videoError;
+
   return (
-    <section
-      className={styles.wrapper}
-      aria-label="Cinematic introduction"
-      onClick={onHeroInteract}
-    >
+    <section className={styles.wrapper} aria-label="Cinematic introduction">
       <div className={styles.sticky}>
         <div ref={heroRef} className={styles.hero}>
           <div
             ref={videoStageRef}
-            className={`${styles.videoStage} ${hasFinished ? styles.videoStageFinished : ""}`}
+            className={`${styles.videoStage} ${showPoster ? styles.videoStageFinished : ""}`}
           >
-            {!videoReady && <div className={styles.videoFallback} aria-hidden />}
+            {showFallback && <div className={styles.videoFallback} aria-hidden />}
 
             <video
-              ref={setVideoElement}
+              ref={videoRef}
               className={styles.videoForeground}
               src={HERO_VIDEO_SRC}
+              autoPlay={enabled}
               playsInline
               preload="auto"
+              suppressHydrationWarning
               disablePictureInPicture
+              onPlaying={onVideoPlaying}
+              onLoadedData={ensureAutoplay}
+              onCanPlay={ensureAutoplay}
               onEnded={showPosterOnEnd}
-              onPlay={syncMuteState}
+              onError={onVideoError}
             />
 
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={HERO_POSTER_SRC}
               alt=""
-              className={`${styles.videoPoster} ${hasFinished ? styles.videoPosterVisible : ""}`}
+              className={`${styles.videoPoster} ${showPoster ? styles.videoPosterVisible : ""}`}
               aria-hidden
             />
           </div>
@@ -399,42 +397,26 @@ export default function VideoIntro() {
             <button
               type="button"
               className={styles.glassButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                void togglePlay();
-              }}
-              aria-label={isPlaying ? "Pause video" : "Play video"}
+              onPointerDown={togglePlay}
+              aria-label={
+                phase === "playing" && isPlaying
+                  ? "Pause video"
+                  : phase === "paused"
+                    ? "Resume video"
+                    : "Replay video"
+              }
             >
-              {isPlaying ? <IconPause /> : <IconPlay />}
+              {phase === "playing" && isPlaying ? <IconPause /> : <IconPlay />}
             </button>
             <button
               type="button"
               className={styles.glassButton}
-              onClick={(e) => {
-                e.stopPropagation();
-                void toggleMute();
-              }}
+              onPointerDown={onVolumePointerDown}
               aria-label={isMuted ? "Unmute video" : "Mute video"}
-              disabled={hasFinished}
             >
               {isMuted ? <IconVolumeOff /> : <IconVolumeOn />}
             </button>
           </div>
-
-          {showSoundBadge && (
-            <button
-              ref={soundBadgeRef}
-              type="button"
-              className={styles.soundBadge}
-              onClick={(e) => {
-                e.stopPropagation();
-                void enableSoundAfterBlock();
-              }}
-              aria-label="Enable sound"
-            >
-              Tap for sound
-            </button>
-          )}
 
           <div className={styles.content}>
             <div className={styles.copyBlock}>
