@@ -17,7 +17,7 @@ Edit **`lib/portfolio/profile.ts`** — name, email, LinkedIn, GitHub, skills, e
 
 | Asset | Path |
 |--------|------|
-| Intro video | `public/Use_the_uploaded_image_as_the.mp4` |
+| Intro video | `public/nikhilPortfolioIntro.mp4` |
 | Hero still (after video) | `public/hero-poster.png` |
 | Resume PDF | `public/resume.pdf` |
 

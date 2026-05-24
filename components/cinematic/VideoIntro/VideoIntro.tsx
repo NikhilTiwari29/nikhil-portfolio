@@ -58,7 +58,6 @@ function applyVideoMute(video: HTMLVideoElement, muted: boolean) {
 }
 
 type VideoIntroProps = {
-  /** True after the user clicks “Enter portfolio” (unlocks sound via user gesture). */
   enabled?: boolean;
   onRegisterStart?: (start: () => void) => void;
 };
@@ -67,9 +66,8 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
   const heroRef = useRef<HTMLDivElement>(null);
   const videoStageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const phaseRef = useRef<HeroPhase>("playing");
   const hasPlayedRef = useRef(false);
-  const autoplayAttemptedRef = useRef(false);
-  /** Only true when the user explicitly pressed mute — not browser autoplay policy. */
   const userChoseMuteRef = useRef(false);
   const firstNameRef = useRef<HTMLParagraphElement>(null);
   const lastNameRef = useRef<HTMLSpanElement>(null);
@@ -85,135 +83,108 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
 
   const showPoster = phase === "paused" || phase === "ended";
 
-  const forceSoundOn = useCallback((video: HTMLVideoElement) => {
-    if (userChoseMuteRef.current) return;
-    applyVideoMute(video, false);
-    video.volume = 1;
-    setIsMuted(false);
+  const setPhaseSync = useCallback((next: HeroPhase) => {
+    phaseRef.current = next;
+    setPhase(next);
   }, []);
 
-  const playWithSound = useCallback(
-    (video: HTMLVideoElement) => {
-      video.loop = false;
+  const applyMutePreference = useCallback((video: HTMLVideoElement) => {
+    if (userChoseMuteRef.current) {
+      applyVideoMute(video, true);
+      setIsMuted(true);
+    } else {
+      applyVideoMute(video, false);
       video.volume = 1;
+      setIsMuted(false);
+    }
+  }, []);
 
-      if (userChoseMuteRef.current) {
-        applyVideoMute(video, true);
-        setIsMuted(true);
-      } else {
-        forceSoundOn(video);
-      }
+  const playVideo = useCallback(() => {
+    const video = videoRef.current;
+    if (!video || phaseRef.current === "ended") return;
 
-      return video.play();
-    },
-    [forceSoundOn],
-  );
+    video.loop = false;
+    video.removeAttribute("loop");
+    applyMutePreference(video);
+
+    void video.play().then(
+      () => {
+        setIsPlaying(true);
+        setHasVisual(true);
+      },
+      () => setIsPlaying(false),
+    );
+  }, [applyMutePreference]);
+
+  const pauseVideo = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.pause();
+    setPhaseSync("paused");
+    setIsPlaying(false);
+  }, [setPhaseSync]);
 
   const startHeroPlayback = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (!video.paused && !video.muted && phase === "playing") {
-      setIsPlaying(true);
-      setHasVisual(true);
-      return;
-    }
-
-    setPhase("playing");
-    userChoseMuteRef.current = false;
-
-    const run = (attempt: number) => {
-      forceSoundOn(video);
-      const p = playWithSound(video);
-      if (!p) return;
-
-      void p.then(
-        () => {
-          setIsPlaying(true);
-          setHasVisual(true);
-          forceSoundOn(video);
-        },
-        () => {
-          if (attempt < 4) {
-            window.setTimeout(() => run(attempt + 1), attempt * 80);
-            return;
-          }
-          applyVideoMute(video, true);
-          void video.play().then(
-            () => {
-              setIsPlaying(true);
-              setHasVisual(true);
-              forceSoundOn(video);
-            },
-            () => setIsPlaying(false),
-          );
-        },
-      );
-    };
-
-    run(0);
-  }, [forceSoundOn, phase, playWithSound]);
+    hasPlayedRef.current = false;
+    setPhaseSync("playing");
+    playVideo();
+  }, [playVideo, setPhaseSync]);
 
   const replayFromStart = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
 
     hasPlayedRef.current = false;
-    autoplayAttemptedRef.current = false;
-    userChoseMuteRef.current = false;
-    setPhase("playing");
     video.currentTime = 0;
-    startHeroPlayback();
-  }, [startHeroPlayback]);
+    setPhaseSync("playing");
+    playVideo();
+  }, [playVideo, setPhaseSync]);
 
   const showPosterOnEnd = useCallback(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || phaseRef.current === "ended") return;
 
+    video.loop = false;
+    video.removeAttribute("loop");
     video.pause();
-    setPhase("ended");
-    setIsPlaying(false);
-  }, []);
 
-  const ensureAutoplay = useCallback(() => {
-    const video = videoRef.current;
-    if (!enabled || !video || phase !== "playing") return;
-
-    if (!video.paused) {
-      autoplayAttemptedRef.current = true;
-      setIsPlaying(true);
-      setHasVisual(true);
-      forceSoundOn(video);
-      return;
+    if (video.duration && Number.isFinite(video.duration)) {
+      video.currentTime = Math.max(0, video.duration - HERO_END_TRIM);
     }
 
-    if (autoplayAttemptedRef.current) return;
-    autoplayAttemptedRef.current = true;
-    startHeroPlayback();
-  }, [enabled, forceSoundOn, phase, startHeroPlayback]);
-
-  const onVideoPlaying = useCallback(() => {
-    const video = videoRef.current;
-    if (!video || phase !== "playing") return;
-
-    setHasVisual(true);
-    setVideoError(false);
-    setIsPlaying(true);
-    video.loop = false;
-    forceSoundOn(video);
-  }, [forceSoundOn, phase]);
+    setPhaseSync("ended");
+    setIsPlaying(false);
+  }, [setPhaseSync]);
 
   useEffect(() => {
     onRegisterStart?.(startHeroPlayback);
   }, [onRegisterStart, startHeroPlayback]);
 
   useEffect(() => {
-    if (!enabled) return;
     const video = videoRef.current;
-    if (video && video.paused) {
-      startHeroPlayback();
-    }
-  }, [enabled, startHeroPlayback]);
+    if (!video) return;
+
+    video.loop = false;
+    video.removeAttribute("loop");
+
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    const onVolumeChange = () => setIsMuted(video.muted);
+
+    video.addEventListener("play", onPlay);
+    video.addEventListener("pause", onPause);
+    video.addEventListener("volumechange", onVolumeChange);
+
+    return () => {
+      video.removeEventListener("play", onPlay);
+      video.removeEventListener("pause", onPause);
+      video.removeEventListener("volumechange", onVolumeChange);
+    };
+  }, [enabled]);
 
   useEffect(() => {
     const img = new Image();
@@ -222,11 +193,14 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !hasVisual || phase !== "playing") return;
+    if (!video || !hasVisual || phaseRef.current !== "playing") return;
 
     const onTimeUpdate = () => {
+      if (phaseRef.current !== "playing") return;
+
       const { duration, currentTime } = video;
       if (!duration || !Number.isFinite(duration)) return;
+
       if (currentTime > 0.4) hasPlayedRef.current = true;
       if (hasPlayedRef.current && currentTime >= duration - HERO_END_TRIM) {
         showPosterOnEnd();
@@ -236,16 +210,6 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
     video.addEventListener("timeupdate", onTimeUpdate);
     return () => video.removeEventListener("timeupdate", onTimeUpdate);
   }, [hasVisual, phase, showPosterOnEnd]);
-
-  useEffect(() => {
-    const onPageShow = () => {
-      if (!enabled) return;
-      replayFromStart();
-    };
-
-    window.addEventListener("pageshow", onPageShow);
-    return () => window.removeEventListener("pageshow", onPageShow);
-  }, [enabled, replayFromStart]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -275,7 +239,12 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
         tl.to(firstNameRef.current, { opacity: 1, y: 0, duration: 1.1 }, "-=0.9")
           .to(lastNameRef.current, { opacity: 1, y: 0, duration: 1.1 }, "-=0.9")
           .to(roleRef.current, { opacity: 1, y: 0, duration: 0.95 }, "-=0.8")
-          .to(controlsRef.current, { opacity: 1, y: 0, duration: 0.85 }, "-=0.7")
+          .fromTo(
+            controlsRef.current,
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.85 },
+            "-=0.7",
+          )
           .to(scrollRef.current, { opacity: 1, duration: 0.8 }, "-=0.5");
       } else {
         gsap.set(
@@ -294,47 +263,48 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
     return () => ctx.revert();
   }, []);
 
-  const togglePlay = (e: React.PointerEvent) => {
-    e.stopPropagation();
+  const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
 
-    if (phase === "playing" && isPlaying) {
-      video.pause();
-      setPhase("paused");
-      setIsPlaying(false);
+    if (phaseRef.current === "ended") {
+      replayFromStart();
       return;
     }
 
-    if (phase === "paused") {
-      setPhase("playing");
-      if (!userChoseMuteRef.current) forceSoundOn(video);
-      else applyVideoMute(video, true);
-      void video.play().then(
-        () => setIsPlaying(true),
-        () => setIsPlaying(false),
-      );
+    if (phaseRef.current === "playing" && !video.paused) {
+      pauseVideo();
       return;
     }
 
-    replayFromStart();
+    setPhaseSync("playing");
+    playVideo();
   };
 
-  const onVolumePointerDown = (e: React.PointerEvent) => {
-    e.stopPropagation();
+  const toggleMute = () => {
     const video = videoRef.current;
     if (!video) return;
 
     if (video.muted || userChoseMuteRef.current) {
       userChoseMuteRef.current = false;
-      forceSoundOn(video);
-      void video.play().then(() => setIsPlaying(true));
+      applyVideoMute(video, false);
+      video.volume = 1;
+      setIsMuted(false);
       return;
     }
 
     userChoseMuteRef.current = true;
     applyVideoMute(video, true);
     setIsMuted(true);
+  };
+
+  const onVideoLoaded = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.loop = false;
+    video.removeAttribute("loop");
+    setHasVisual(true);
+    setVideoError(false);
   };
 
   const scrollToNext = () => {
@@ -366,14 +336,12 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
               ref={videoRef}
               className={styles.videoForeground}
               src={HERO_VIDEO_SRC}
-              autoPlay={enabled}
               playsInline
               preload="auto"
               suppressHydrationWarning
               disablePictureInPicture
-              onPlaying={onVideoPlaying}
-              onLoadedData={ensureAutoplay}
-              onCanPlay={ensureAutoplay}
+              onLoadedData={onVideoLoaded}
+              onPlaying={onVideoLoaded}
               onEnded={showPosterOnEnd}
               onError={onVideoError}
             />
@@ -397,7 +365,11 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
             <button
               type="button"
               className={styles.glassButton}
-              onPointerDown={togglePlay}
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                togglePlay();
+              }}
               aria-label={
                 phase === "playing" && isPlaying
                   ? "Pause video"
@@ -411,7 +383,11 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
             <button
               type="button"
               className={styles.glassButton}
-              onPointerDown={onVolumePointerDown}
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMute();
+              }}
               aria-label={isMuted ? "Unmute video" : "Mute video"}
             >
               {isMuted ? <IconVolumeOff /> : <IconVolumeOn />}

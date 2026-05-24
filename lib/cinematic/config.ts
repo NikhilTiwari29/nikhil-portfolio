@@ -1,4 +1,4 @@
-export const HERO_VIDEO_SRC = "/Use_the_uploaded_image_as_the.mp4";
+export const HERO_VIDEO_SRC = "/nikhilPortfolioIntro.mp4";
 
 /** Still image shown after the intro video ends. */
 export const HERO_POSTER_SRC = "/hero-poster.png";

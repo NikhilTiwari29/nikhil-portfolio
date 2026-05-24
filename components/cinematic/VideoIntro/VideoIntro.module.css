@@ -145,7 +145,7 @@
   flex-direction: column;
   justify-content: flex-end;
   padding: clamp(1.5rem, 4.5vw, 3.5rem);
-  padding-bottom: clamp(6rem, 13vh, 8rem);
+  padding-bottom: clamp(4.25rem, 9vh, 6rem);
   pointer-events: none;
 }
 
@@ -206,17 +206,20 @@
 
 .controls {
   position: absolute;
-  top: clamp(1.25rem, 3.5vw, 2.25rem);
-  right: clamp(1.25rem, 3.5vw, 2.25rem);
-  z-index: 6;
+  top: calc(var(--site-nav-height) + 0.85rem);
+  left: clamp(1.25rem, 3.5vw, 2.25rem);
+  right: auto;
+  z-index: 110;
   display: flex;
   align-items: center;
   gap: 0.7rem;
   opacity: 0;
-  transform: translateY(-10px);
+  pointer-events: auto;
 }
 
 .glassButton {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -240,13 +243,15 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-.glassButton:hover {
-  background: rgba(255, 138, 61, 0.12);
-  border-color: rgba(255, 138, 61, 0.32);
-  transform: translateY(-2px) scale(1.02);
-  box-shadow:
-    0 16px 44px rgba(255, 100, 40, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+@media (hover: hover) and (pointer: fine) {
+  .glassButton:hover {
+    background: rgba(255, 138, 61, 0.12);
+    border-color: rgba(255, 138, 61, 0.32);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 16px 44px rgba(255, 100, 40, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  }
 }
 
 .glassButton:active {
@@ -267,6 +272,7 @@
 .glassButton svg {
   width: 1.08rem;
   height: 1.08rem;
+  pointer-events: none;
 }
 
 .soundBadge {
@@ -381,9 +387,9 @@
   }
 
   .controls {
-    top: auto;
-    bottom: 6rem;
-    right: 1.1rem;
+    top: calc(var(--site-nav-height) + 0.65rem);
+    left: 1.1rem;
+    right: auto;
   }
 
   .soundBadge {
