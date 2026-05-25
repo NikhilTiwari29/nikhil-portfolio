@@ -184,7 +184,7 @@ export const RESUME = {
   isPlaceholder: true,
   contact: {
     email: PROFILE.email,
-    phone: "+91 XXXXX XXXXX",
+    phone: "+91 9265974979",
     location: PROFILE.location,
     linkedin: PROFILE.linkedin,
     github: PROFILE.github,
