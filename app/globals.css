@@ -15,7 +15,13 @@
 @theme inline {
   --color-background: var(--bg-base);
   --color-foreground: var(--text-primary);
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-blue: var(--accent-blue);
+  --color-text-muted: var(--text-muted);
   --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-syne);
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
 }
 
 html {

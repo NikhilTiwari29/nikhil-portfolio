@@ -40,7 +40,7 @@ export default function HomeClient() {
       {showGate && <PortfolioGate onEnter={handleEnter} />}
       <SiteNav />
       <VideoIntro enabled={hasEntered} onRegisterStart={registerVideoStart} />
-      <main className="main">
+      <main className="main relative z-[2] w-full overflow-x-hidden">
         <AboutSection />
         <SkillsSection />
         <ExperienceSection />

@@ -394,20 +394,28 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
             </button>
           </div>
 
-          <div className={styles.content}>
-            <div className={styles.copyBlock}>
-              <h1 className={styles.nameStack}>
-                <span ref={firstNameRef} className={styles.nameLine}>
+          <div
+            className={`${styles.content} pointer-events-none absolute inset-0 z-[5] flex flex-col justify-end px-4 pb-[calc(2.75rem+env(safe-area-inset-bottom,0px))] sm:px-6 sm:pb-[calc(3.25rem+env(safe-area-inset-bottom,0px))] md:px-8 md:pb-[calc(3.75rem+env(safe-area-inset-bottom,0px))] lg:px-10 lg:pb-[calc(4.25rem+env(safe-area-inset-bottom,0px))]`}
+          >
+            <div className="pointer-events-auto w-full max-w-4xl md:max-w-5xl lg:max-w-6xl">
+              <h1 className="m-0 flex flex-col gap-0 leading-[0.86] tracking-[-0.035em]">
+                <span
+                  ref={firstNameRef}
+                  className={`${styles.nameLine} font-[family-name:var(--font-syne)] text-[clamp(2.75rem,14vw,5rem)] font-extrabold uppercase text-[#fff8f0] sm:text-[clamp(3rem,12vw,6.5rem)] md:text-[clamp(3.5rem,10vw,7.5rem)] lg:text-[clamp(4rem,9vw,9rem)]`}
+                >
                   {HERO_CONTENT.firstName}
                 </span>
                 <span
                   ref={lastNameRef}
-                  className={`${styles.nameLine} ${styles.nameLineAccent}`}
+                  className={`${styles.nameLine} ${styles.nameLineAccent} font-[family-name:var(--font-syne)] text-[clamp(2.75rem,14vw,5rem)] font-extrabold uppercase sm:text-[clamp(3rem,12vw,6.5rem)] md:text-[clamp(3.5rem,10vw,7.5rem)] lg:text-[clamp(4rem,9vw,9rem)]`}
                 >
                   {HERO_CONTENT.lastName}
                 </span>
               </h1>
-              <p ref={roleRef} className={styles.role}>
+              <p
+                ref={roleRef}
+                className={`${styles.role} mt-4 max-w-xl pl-0.5 font-sans text-[0.9rem] leading-relaxed tracking-wide text-[rgba(210,220,235,0.68)] sm:mt-5 sm:max-w-2xl sm:text-base md:mt-6 md:text-[1.05rem] lg:max-w-3xl`}
+              >
                 {HERO_CONTENT.role}
               </p>
             </div>

@@ -138,7 +138,29 @@ export const CERTIFICATIONS = [
 
 export const PROJECTS = [
   {
+    title: "LinkedIn Microservices App",
+    architecture: "Microservices" as const,
+    description:
+      "Distributed LinkedIn-style backend with Spring Cloud Gateway, Eureka, and seven services — database-per-service (PostgreSQL + Neo4j), Kafka event-driven notifications, JWT auth at the gateway, Feign inter-service calls, Docker Compose, Kubernetes manifests, and CI across all services.",
+    tech: [
+      "Java 21",
+      "Spring Boot 3",
+      "Spring Cloud",
+      "Kafka",
+      "PostgreSQL",
+      "Neo4j",
+      "Docker",
+      "Kubernetes",
+    ],
+    links: {
+      demo: "",
+      github: `${GITHUB}/linkedInApp-microservice`,
+    },
+    featured: true,
+  },
+  {
     title: "Uber App Backend",
+    architecture: "Monolith" as const,
     description:
       "Spring Boot ride-booking monolith: JWT + refresh tokens, RBAC, ride lifecycle with OTP, wallet/cash payment strategies, PostGIS driver matching, ratings, Swagger UI, and tests with JUnit & Testcontainers.",
     tech: [
@@ -154,39 +176,6 @@ export const PROJECTS = [
       github: `${GITHUB}/uberApp-backend`,
     },
     featured: true,
-  },
-  {
-    title: "Netflix Clone (MERN)",
-    description:
-      "Full-stack streaming platform with the MERN stack — user flows, content browsing, and backend APIs.",
-    tech: ["MongoDB", "Express", "React", "Node.js"],
-    links: {
-      demo: "",
-      github: `${GITHUB}/netflix-clone`,
-    },
-    featured: true,
-  },
-  {
-    title: "Cult.fit Clone",
-    description:
-      "Team project with backend validations, authentication, and end-to-end feature delivery.",
-    tech: ["Node.js", "Express", "MongoDB", "Auth"],
-    links: {
-      demo: "",
-      github: `${GITHUB}/Cult.fit-clone`,
-    },
-    featured: false,
-  },
-  {
-    title: "Lifestyle Store Clone",
-    description:
-      "Masai construct-week e-commerce clone (team of 6) — catalog, cart, and full-stack delivery.",
-    tech: ["JavaScript", "HTML", "CSS"],
-    links: {
-      demo: "",
-      github: `${GITHUB}/lifeStyleProject`,
-    },
-    featured: false,
   },
 ] as const;
 
@@ -228,8 +217,8 @@ export const RESUME = {
     "Full Stack Development — Masai (2022)",
   ],
   projects: [
-    "Uber App Backend — Spring Boot, PostgreSQL, PostGIS, JWT",
-    "Netflix Clone — MERN stack",
+    "LinkedIn Microservices App — Spring Cloud, Kafka, PostgreSQL, Neo4j",
+    "Uber App Backend — Spring Boot monolith, PostgreSQL, PostGIS, JWT",
   ],
 } as const;
 
