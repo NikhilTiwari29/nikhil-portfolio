@@ -1,4 +1,5 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { EDUCATION } from "@/lib/portfolio/profile";
 
@@ -13,7 +14,8 @@ export default function EducationSection() {
 
       <ul className="m-0 grid list-none gap-4 p-0 md:grid-cols-2">
         {EDUCATION.map((item) => (
-          <li
+          <Card3D
+            as="li"
             key={item.school}
             data-reveal="card"
             className="education-card rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6"
@@ -28,7 +30,7 @@ export default function EducationSection() {
               <time>{item.period}</time>
               <span>{item.location}</span>
             </div>
-          </li>
+          </Card3D>
         ))}
       </ul>
     </PageSection>

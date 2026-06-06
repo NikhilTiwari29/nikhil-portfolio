@@ -11,8 +11,8 @@ export const PROFILE = {
   linkedin: "https://www.linkedin.com/in/nikhil-tiwari-0b6980212/",
   github: GITHUB,
   website: "https://nikhiltiwari.netlify.app/",
-  resumeUrl: "https://drive.google.com/file/d/1AYmf0dIvmdxh0nzoxckYpxD6VIehm1md/view?usp=sharing",
-  availability: "Open to backend engineer and backend developer opportunities",
+  resumeUrl: "https://drive.google.com/file/d/1VvVQm88GTXKufVhqPRF_DXnJOx-Irpb-/view?usp=sharing",
+  availability: "Open to Backend Engineer opportunities.",
   yearsExperience: "4+",
 } as const;
 

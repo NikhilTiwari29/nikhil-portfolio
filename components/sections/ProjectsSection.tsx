@@ -1,4 +1,5 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PROJECTS } from "@/lib/portfolio/profile";
 import { cn } from "@/lib/utils/cn";
@@ -45,10 +46,12 @@ function ProjectCard({
   const hasDemo = Boolean(project.links.demo);
 
   return (
-    <article
+    <Card3D
+      as="article"
       data-reveal="project"
+      contentClassName="flex h-full flex-col"
       className={cn(
-        "group flex flex-col overflow-hidden rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[rgba(255,138,61,0.35)]",
+        "group overflow-hidden rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[rgba(255,138,61,0.35)]",
         featured &&
           "border-[rgba(255,138,61,0.15)] bg-gradient-to-br from-[rgba(255,138,61,0.06)] to-[var(--bg-card)]",
       )}
@@ -126,6 +129,6 @@ function ProjectCard({
         ) : null}
       </div>
       </div>
-    </article>
+    </Card3D>
   );
 }

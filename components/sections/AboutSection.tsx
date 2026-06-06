@@ -1,4 +1,5 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { ABOUT, PROFILE } from "@/lib/portfolio/profile";
 
@@ -23,9 +24,11 @@ export default function AboutSection() {
           </p>
         </div>
 
-        <aside
+        <Card3D
+          as="aside"
           data-reveal="card"
-          className="about-facts flex flex-col gap-5 rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6"
+          contentClassName="flex flex-col gap-5"
+          className="about-facts rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6"
           aria-label="Quick facts"
         >
           {ABOUT.highlights.map((item) => (
@@ -44,7 +47,7 @@ export default function AboutSection() {
           >
             View resume
           </a>
-        </aside>
+        </Card3D>
       </div>
     </PageSection>
   );

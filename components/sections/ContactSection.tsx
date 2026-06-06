@@ -1,11 +1,16 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PROFILE } from "@/lib/portfolio/profile";
 
 export default function ContactSection() {
   return (
     <PageSection id="contact" ariaLabelledBy="contact-heading">
-      <div data-reveal="contact" className="rounded-2xl border border-[var(--border-subtle)] bg-gradient-to-br from-[rgba(255,138,61,0.08)] via-[var(--bg-card)] to-[rgba(110,184,255,0.05)] p-6 sm:p-8 md:p-10 lg:p-12">
+      <Card3D
+        data-reveal="contact"
+        intensity={0.7}
+        className="rounded-2xl border border-[var(--border-subtle)] bg-gradient-to-br from-[rgba(255,138,61,0.08)] via-[var(--bg-card)] to-[rgba(110,184,255,0.05)] p-6 sm:p-8 md:p-10 lg:p-12"
+      >
         <SectionHeading
           eyebrow="Contact"
           title="Let's connect"
@@ -102,7 +107,7 @@ export default function ContactSection() {
             </dd>
           </div>
         </dl>
-      </div>
+      </Card3D>
     </PageSection>
   );
 }

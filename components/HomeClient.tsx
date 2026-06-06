@@ -12,6 +12,7 @@ import ExperienceSection from "@/components/sections/ExperienceSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ResumeSection from "@/components/sections/ResumeSection";
 import SkillsSection from "@/components/sections/SkillsSection";
+import Card3D from "@/components/ui/Card3D";
 import MotionEffects from "@/components/ui/MotionEffects";
 import { PROFILE } from "@/lib/portfolio/profile";
 
@@ -55,14 +56,19 @@ export default function HomeClient() {
               ["Performance", "~30% faster APIs"],
               ["Testing", "70+ project tests"],
             ].map(([label, value]) => (
-              <div key={label} data-reveal="metric" className="border-l border-[rgba(255,138,61,0.35)] pl-3 sm:pl-4">
+              <Card3D
+                key={label}
+                data-reveal="metric"
+                intensity={0.55}
+                className="rounded-md border border-white/[0.06] bg-[rgba(12,14,18,0.55)] px-3 py-3 sm:px-4 sm:py-3.5"
+              >
                 <p className="m-0 font-sans text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
                   {label}
                 </p>
                 <p className="mt-1 font-[family-name:var(--font-syne)] text-sm font-bold text-[var(--text-primary)] sm:text-base">
                   {value}
                 </p>
-              </div>
+              </Card3D>
             ))}
           </div>
         </section>

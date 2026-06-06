@@ -1,4 +1,5 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { PROFILE, RESUME } from "@/lib/portfolio/profile";
 
@@ -11,8 +12,10 @@ export default function ResumeSection() {
         description="A concise view of my backend engineering experience, technical range, and selected work."
       />
 
-      <article
+      <Card3D
+        as="article"
         data-reveal="resume"
+        intensity={0.75}
         className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6 md:p-8"
         aria-label="Resume document preview"
       >
@@ -130,7 +133,7 @@ export default function ResumeSection() {
             </div>
           </div>
         </div>
-      </article>
+      </Card3D>
 
       <div data-reveal="content" className="mt-6 flex flex-wrap gap-3 md:mt-8">
         {PROFILE.resumeUrl ? (

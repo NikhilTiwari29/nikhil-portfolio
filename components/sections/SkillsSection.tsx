@@ -1,4 +1,5 @@
 import PageSection from "@/components/layout/PageSection";
+import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
 import { SKILL_GROUPS } from "@/lib/portfolio/profile";
 import type { CSSProperties } from "react";
@@ -16,7 +17,8 @@ export default function SkillsSection() {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
         {SKILL_GROUPS.map((group, index) => (
-          <article
+          <Card3D
+            as="article"
             key={group.title}
             data-reveal="card"
             style={{ "--card-accent": GROUP_COLORS[index] } as CSSProperties}
@@ -34,7 +36,7 @@ export default function SkillsSection() {
                 </li>
               ))}
             </ul>
-          </article>
+          </Card3D>
         ))}
       </div>
     </PageSection>

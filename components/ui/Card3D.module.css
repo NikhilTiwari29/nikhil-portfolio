@@ -1,0 +1,97 @@
+.card3d {
+  --card-rotate-x: 0deg;
+  --card-rotate-y: 0deg;
+  --card-shine-x: 50%;
+  --card-shine-y: 50%;
+  --card-lift: 0px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: perspective(1100px) rotateX(var(--card-rotate-x)) rotateY(var(--card-rotate-y))
+    translateY(var(--card-lift)) translateZ(0);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.card3d[data-tilted="true"] {
+  transition:
+    transform 0.12s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card3d:hover {
+    --card-lift: -6px;
+    box-shadow:
+      0 28px 60px rgba(0, 0, 0, 0.34),
+      0 12px 28px rgba(0, 0, 0, 0.18),
+      0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+}
+
+.card3dDepth {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    transparent 34%,
+    transparent 66%,
+    rgba(0, 0, 0, 0.22) 100%
+  );
+  opacity: 0.55;
+  transform: translateZ(1px);
+}
+
+.card3dGlare {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    circle at var(--card-shine-x) var(--card-shine-y),
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.06) 22%,
+    transparent 52%
+  );
+  mix-blend-mode: soft-light;
+  transition: opacity 0.35s ease;
+}
+
+.card3d[data-tilted="true"] .card3dGlare {
+  opacity: 1;
+}
+
+.card3dContent {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  transform: translateZ(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card3d {
+    transform: none !important;
+    transition: border-color 0.35s ease, box-shadow 0.35s ease !important;
+  }
+
+  .card3dDepth,
+  .card3dGlare {
+    display: none;
+  }
+
+  .card3dContent {
+    transform: none;
+  }
+}

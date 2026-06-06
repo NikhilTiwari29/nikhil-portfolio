@@ -163,9 +163,22 @@ button:focus-visible {
   }
 }
 
-.skill-card:hover {
-  border-color: color-mix(in srgb, var(--card-accent) 48%, transparent);
-  box-shadow: 0 18px 55px color-mix(in srgb, var(--card-accent) 12%, transparent);
+@media (hover: hover) and (pointer: fine) {
+  .skill-card:hover {
+    border-color: color-mix(in srgb, var(--card-accent) 48%, transparent);
+    box-shadow:
+      0 24px 58px color-mix(in srgb, var(--card-accent) 14%, transparent),
+      0 10px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .experience-card:hover,
+  .education-card:hover,
+  .about-facts:hover {
+    border-color: color-mix(in srgb, var(--card-accent, var(--section-accent)) 42%, transparent);
+    box-shadow:
+      0 24px 58px rgba(0, 0, 0, 0.28),
+      0 10px 24px color-mix(in srgb, var(--card-accent, var(--section-accent)) 10%, transparent);
+  }
 }
 
 .skill-card-title::before {
@@ -321,12 +334,12 @@ button:focus-visible {
   transform: translateY(18px);
 }
 
-.motion-ready [data-reveal="project"] {
-  transform: translateY(20px);
-}
-
-.motion-ready [data-reveal="resume"] {
-  transform: translateY(20px);
+.motion-ready [data-reveal="card"],
+.motion-ready [data-reveal="project"],
+.motion-ready [data-reveal="resume"],
+.motion-ready [data-reveal="contact"],
+.motion-ready [data-reveal="metric"] {
+  transform: none;
 }
 
 .motion-ready [data-reveal].is-revealed {
@@ -334,8 +347,17 @@ button:focus-visible {
   transform: translateY(0);
 }
 
+.motion-ready [data-reveal="card"].is-revealed,
+.motion-ready [data-reveal="project"].is-revealed,
+.motion-ready [data-reveal="resume"].is-revealed,
+.motion-ready [data-reveal="contact"].is-revealed,
+.motion-ready [data-reveal="metric"].is-revealed {
+  transform: none;
+}
+
 [data-reveal="project"].is-revealed,
-[data-reveal="resume"].is-revealed {
+[data-reveal="resume"].is-revealed,
+[data-reveal="contact"].is-revealed {
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.22),
     0 0 0 1px rgba(245, 160, 68, 0.04);
