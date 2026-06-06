@@ -58,11 +58,11 @@ function applyVideoMute(video: HTMLVideoElement, muted: boolean) {
 }
 
 type VideoIntroProps = {
-  enabled?: boolean;
   onRegisterStart?: (start: () => void) => void;
+  onVideoReady?: (ready: boolean) => void;
 };
 
-export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIntroProps) {
+export default function VideoIntro({ onRegisterStart, onVideoReady }: VideoIntroProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoStageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -80,6 +80,7 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
   const [isMuted, setIsMuted] = useState(false);
   const [hasVisual, setHasVisual] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [needsTapToUnmute, setNeedsTapToUnmute] = useState(false);
 
   const showPoster = phase === "paused" || phase === "ended";
 
@@ -106,13 +107,28 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
     video.loop = false;
     video.removeAttribute("loop");
     applyMutePreference(video);
+    setNeedsTapToUnmute(false);
 
     void video.play().then(
       () => {
         setIsPlaying(true);
         setHasVisual(true);
+        setNeedsTapToUnmute(false);
       },
-      () => setIsPlaying(false),
+      () => {
+        // Mobile browsers often reject unmuted play once the gesture is consumed.
+        // Fall back to muted playback so the intro still runs, then prompt to unmute.
+        applyVideoMute(video, true);
+        setIsMuted(true);
+        void video.play().then(
+          () => {
+            setIsPlaying(true);
+            setHasVisual(true);
+            setNeedsTapToUnmute(true);
+          },
+          () => setIsPlaying(false),
+        );
+      },
     );
   }, [applyMutePreference]);
 
@@ -166,34 +182,36 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
   }, [onRegisterStart, startHeroPlayback]);
 
   useEffect(() => {
-    if (!enabled) return;
-    const video = videoRef.current;
-    if (video?.paused) {
-      startHeroPlayback();
-    }
-  }, [enabled, startHeroPlayback]);
-
-  useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     video.loop = false;
     video.removeAttribute("loop");
+    video.load();
+
+    const reportReady = () => {
+      onVideoReady?.(video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA);
+    };
 
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
     const onVolumeChange = () => setIsMuted(video.muted);
 
+    reportReady();
+    video.addEventListener("loadeddata", reportReady);
+    video.addEventListener("canplay", reportReady);
     video.addEventListener("play", onPlay);
     video.addEventListener("pause", onPause);
     video.addEventListener("volumechange", onVolumeChange);
 
     return () => {
+      video.removeEventListener("loadeddata", reportReady);
+      video.removeEventListener("canplay", reportReady);
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
       video.removeEventListener("volumechange", onVolumeChange);
     };
-  }, [enabled]);
+  }, [onVideoReady]);
 
   useEffect(() => {
     const img = new Image();
@@ -299,12 +317,14 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
       applyVideoMute(video, false);
       video.volume = 1;
       setIsMuted(false);
+      setNeedsTapToUnmute(false);
       return;
     }
 
     userChoseMuteRef.current = true;
     applyVideoMute(video, true);
     setIsMuted(true);
+    setNeedsTapToUnmute(false);
   };
 
   const onVideoLoaded = () => {
@@ -369,6 +389,19 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
           <div className={styles.gradientVignette} aria-hidden />
           <div className={styles.gradientWarm} aria-hidden />
           <div className={styles.gradientBlue} aria-hidden />
+
+          {needsTapToUnmute && (
+            <button
+              type="button"
+              className={styles.soundBadge}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMute();
+              }}
+            >
+              Tap for sound
+            </button>
+          )}
 
           <div ref={controlsRef} className={styles.controls}>
             <button

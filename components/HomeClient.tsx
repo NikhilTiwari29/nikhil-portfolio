@@ -16,8 +16,8 @@ import MotionEffects from "@/components/ui/MotionEffects";
 import { PROFILE } from "@/lib/portfolio/profile";
 
 export default function HomeClient() {
-  const [hasEntered, setHasEntered] = useState(false);
   const [showGate, setShowGate] = useState(true);
+  const [videoReady, setVideoReady] = useState(false);
   const startVideoRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -27,22 +27,28 @@ export default function HomeClient() {
     };
   }, [showGate]);
 
+  useEffect(() => {
+    const fallbackTimer = window.setTimeout(() => setVideoReady(true), 4000);
+    return () => window.clearTimeout(fallbackTimer);
+  }, []);
+
   const registerVideoStart = useCallback((start: () => void) => {
     startVideoRef.current = start;
   }, []);
 
   const handleEnter = useCallback(() => {
-    setHasEntered(true);
+    // Start playback in the same user-gesture task before React state updates.
+    // Mobile Chrome only allows unmuted play when play() runs synchronously on tap/click.
     startVideoRef.current?.();
     window.setTimeout(() => setShowGate(false), 450);
   }, []);
 
   return (
     <>
-      {showGate && <PortfolioGate onEnter={handleEnter} />}
+      {showGate && <PortfolioGate onEnter={handleEnter} videoReady={videoReady} />}
       <MotionEffects />
       <SiteNav />
-      <VideoIntro enabled={hasEntered} onRegisterStart={registerVideoStart} />
+      <VideoIntro onRegisterStart={registerVideoStart} onVideoReady={setVideoReady} />
       <main className="main relative z-[2] w-full overflow-x-hidden">
         <section
           className="relative z-[3] border-y border-white/[0.08] bg-[#090a0f] px-4 py-5 sm:px-6 md:px-8 lg:px-10"
