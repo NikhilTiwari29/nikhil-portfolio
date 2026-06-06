@@ -15,15 +15,17 @@ export default function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <header
+      data-reveal="heading"
       className={cn(
         "mb-8 max-w-2xl md:mb-10 lg:mb-12",
         className,
       )}
     >
       <p className="mb-3 font-sans text-[0.72rem] font-medium uppercase tracking-[0.32em] text-[var(--accent-warm)]">
+        <span className="mr-2 text-[var(--text-muted)]">/</span>
         {eyebrow}
       </p>
-      <h2 className="font-[family-name:var(--font-syne)] text-[clamp(1.75rem,4.5vw,2.75rem)] font-bold leading-[1.15] tracking-[-0.02em] text-[var(--text-primary)]">
+      <h2 className="pb-[0.12em] font-[family-name:var(--font-syne)] text-[clamp(1.75rem,4.5vw,2.75rem)] font-bold leading-[1.25] tracking-[-0.02em] text-[var(--text-primary)]">
         {title}
       </h2>
       {description ? (

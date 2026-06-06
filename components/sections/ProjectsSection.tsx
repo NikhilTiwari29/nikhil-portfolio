@@ -12,7 +12,7 @@ export default function ProjectsSection() {
       <SectionHeading
         eyebrow="Projects"
         title="Selected backend work"
-        description="Microservices and monolith backends — distributed systems, APIs, and production-style Spring Boot design."
+        description="Production-style Spring Boot systems with measurable scope, architecture decisions, automated tests, and documented APIs."
       />
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
@@ -46,12 +46,19 @@ function ProjectCard({
 
   return (
     <article
+      data-reveal="project"
       className={cn(
-        "flex flex-col rounded-[0.85rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-[rgba(255,138,61,0.25)] sm:p-6",
+        "group flex flex-col overflow-hidden rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[rgba(255,138,61,0.35)]",
         featured &&
           "border-[rgba(255,138,61,0.15)] bg-gradient-to-br from-[rgba(255,138,61,0.06)] to-[var(--bg-card)]",
       )}
     >
+      <div className="border-b border-white/[0.07] bg-black/10 px-5 py-4 sm:px-6">
+        <p className="m-0 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--accent-warm)]">
+          {project.outcome}
+        </p>
+      </div>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
       <div className="mb-3 flex flex-wrap items-center gap-2.5">
         <h3 className="m-0 font-[family-name:var(--font-syne)] text-lg font-bold text-[var(--text-primary)] md:text-xl">
           {project.title}
@@ -66,21 +73,32 @@ function ProjectCard({
         >
           {project.architecture}
         </span>
+        <time className="ml-auto font-sans text-[0.72rem] text-[var(--text-muted)]">
+          {project.period}
+        </time>
       </div>
       <p className="mb-4 flex-1 font-sans text-[0.95rem] leading-relaxed text-[var(--text-muted)]">
         {project.description}
       </p>
+      <ul className="mb-5 grid list-none gap-2 border-l border-[rgba(255,138,61,0.3)] pl-3" aria-label="Architecture highlights">
+        {project.patterns.map((pattern) => (
+          <li key={pattern} data-pop className="font-sans text-[0.78rem] font-medium text-[var(--text-primary)]">
+            {pattern}
+          </li>
+        ))}
+      </ul>
       <ul className="mb-4 flex list-none flex-wrap gap-2 p-0" aria-label="Technologies">
         {project.tech.map((t) => (
           <li
             key={t}
-            className="rounded-md bg-[rgba(110,184,255,0.08)] px-2 py-1 font-sans text-[0.72rem] text-[rgba(180,210,255,0.9)]"
+            data-pop
+            className="project-tech rounded-md px-2 py-1 font-sans text-[0.72rem] font-medium"
           >
             {t}
           </li>
         ))}
       </ul>
-      <div className="mt-auto flex gap-4">
+      <div className="mt-auto flex gap-4 border-t border-white/[0.07] pt-4">
         {hasGithub ? (
           <a
             href={project.links.github}
@@ -88,7 +106,7 @@ function ProjectCard({
             rel="noopener noreferrer"
             className="font-sans text-[0.85rem] font-medium text-[var(--accent-warm)] no-underline hover:underline"
           >
-            GitHub
+            Review source &rarr;
           </a>
         ) : null}
         {hasDemo ? (
@@ -106,6 +124,7 @@ function ProjectCard({
             Source on GitHub
           </span>
         ) : null}
+      </div>
       </div>
     </article>
   );

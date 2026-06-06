@@ -77,7 +77,7 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
 
   const [phase, setPhase] = useState<HeroPhase>("playing");
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [hasVisual, setHasVisual] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
@@ -163,6 +163,12 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
   useEffect(() => {
     onRegisterStart?.(startHeroPlayback);
   }, [onRegisterStart, startHeroPlayback]);
+
+  useEffect(() => {
+    if (!enabled) return;
+    userChoseMuteRef.current = true;
+    startHeroPlayback();
+  }, [enabled, startHeroPlayback]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -414,10 +420,24 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
               </h1>
               <p
                 ref={roleRef}
-                className={`${styles.role} mt-4 max-w-xl pl-0.5 font-sans text-[0.9rem] leading-relaxed tracking-wide text-[rgba(210,220,235,0.68)] sm:mt-5 sm:max-w-2xl sm:text-base md:mt-6 md:text-[1.05rem] lg:max-w-3xl`}
+                className={`${styles.role} mt-4 max-w-xl pl-0.5 font-sans text-[0.9rem] leading-relaxed text-[rgba(225,232,240,0.78)] sm:mt-5 sm:max-w-2xl sm:text-base md:mt-6 md:text-[1.05rem] lg:max-w-3xl`}
               >
                 {HERO_CONTENT.role}
               </p>
+              <div className="mt-5 flex flex-wrap gap-3 sm:mt-6">
+                <a
+                  href="#projects"
+                  className="inline-flex items-center rounded-[0.55rem] bg-[var(--accent-warm)] px-4 py-2.5 font-sans text-[0.82rem] font-semibold text-[#160d08] no-underline transition-transform hover:-translate-y-px sm:px-5 sm:py-3 sm:text-[0.88rem]"
+                >
+                  Explore selected work
+                </a>
+                <a
+                  href="#contact"
+                  className="inline-flex items-center rounded-[0.55rem] border border-white/[0.18] bg-black/20 px-4 py-2.5 font-sans text-[0.82rem] font-semibold text-[var(--text-primary)] no-underline backdrop-blur-md transition-colors hover:border-[rgba(255,138,61,0.5)] sm:px-5 sm:py-3 sm:text-[0.88rem]"
+                >
+                  Discuss a role
+                </a>
+              </div>
             </div>
           </div>
 

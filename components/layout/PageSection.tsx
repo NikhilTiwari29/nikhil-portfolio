@@ -24,7 +24,7 @@ export default function PageSection({
       aria-labelledby={ariaLabelledBy}
       className={cn(
         "relative z-[2] border-t border-white/[0.08]",
-        "px-4 py-14 sm:px-6 sm:py-16 md:px-8 md:py-20 lg:px-10 lg:py-24",
+        "px-4 py-16 sm:px-6 sm:py-20 md:px-8 md:py-24 lg:px-10 lg:py-28",
         variant === "elevated" ? "bg-[var(--bg-elevated)]" : "bg-[var(--bg-base)]",
         className,
       )}

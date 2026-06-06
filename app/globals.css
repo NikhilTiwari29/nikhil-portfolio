@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #050508;
-  --bg-elevated: #0a0a10;
-  --bg-card: rgba(14, 14, 20, 0.85);
-  --text-primary: #fff8f0;
-  --text-muted: rgba(200, 210, 225, 0.72);
-  --accent-warm: #ff8a3d;
-  --accent-blue: #6eb8ff;
+  --bg-base: #060709;
+  --bg-elevated: #0b0d10;
+  --bg-card: rgba(18, 20, 24, 0.88);
+  --text-primary: #f7f8f5;
+  --text-muted: rgba(202, 209, 214, 0.72);
+  --accent-warm: #f5a044;
+  --accent-blue: #69b9c9;
   --border-subtle: rgba(255, 255, 255, 0.08);
   --site-nav-height: 4.5rem;
 }
@@ -33,6 +33,14 @@ body {
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+section {
+  scroll-margin-top: var(--site-nav-height);
 }
 
 ::selection {
@@ -51,8 +59,346 @@ button:focus-visible {
   z-index: 2;
 }
 
+#about,
+#experience,
+#contact {
+  --section-accent: #f5a044;
+}
+
+#skills,
+#resume {
+  --section-accent: #69b9c9;
+}
+
+#projects {
+  --section-accent: #9b8cff;
+}
+
+#education {
+  --section-accent: #54c68a;
+}
+
+#about::before,
+#skills::before,
+#experience::before,
+#projects::before,
+#education::before,
+#resume::before,
+#contact::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: min(22rem, 52vw);
+  height: 2px;
+  background: linear-gradient(90deg, var(--section-accent), transparent);
+  opacity: 0.72;
+}
+
+.skill-card,
+.experience-card,
+.education-card,
+.about-facts,
+[data-reveal="project"],
+[data-reveal="resume"],
+[data-reveal="contact"] {
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.skill-card {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--card-accent) 10%, transparent), transparent 52%),
+    var(--bg-card);
+}
+
+.skill-card::before,
+.experience-card::before,
+.education-card::before,
+.about-facts::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--card-accent, var(--section-accent, var(--accent-warm)));
+  opacity: 0.8;
+}
+
+.skill-card::after,
+.experience-card::after,
+.education-card::after,
+.about-facts::after,
+[data-reveal="project"]::after,
+[data-reveal="resume"]::after,
+[data-reveal="contact"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 18%,
+    rgba(245, 160, 68, 0.1) 43%,
+    rgba(105, 185, 201, 0.12) 52%,
+    rgba(155, 140, 255, 0.08) 60%,
+    transparent 82%
+  );
+  transform: translateX(-125%);
+  transition: transform 0.85s ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-card:hover::after,
+  .experience-card:hover::after,
+  .education-card:hover::after,
+  .about-facts:hover::after,
+  [data-reveal="project"]:hover::after,
+  [data-reveal="resume"]:hover::after,
+  [data-reveal="contact"]:hover::after {
+    transform: translateX(125%);
+  }
+}
+
+.skill-card:hover {
+  border-color: color-mix(in srgb, var(--card-accent) 48%, transparent);
+  box-shadow: 0 18px 55px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+.skill-card-title::before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.65rem;
+  border-radius: 2px;
+  background: var(--card-accent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--card-accent) 65%, transparent);
+}
+
+.skill-pill {
+  border: 1px solid color-mix(in srgb, var(--card-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+  color: color-mix(in srgb, var(--card-accent) 58%, white);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.skill-pill:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--card-accent) 58%, transparent);
+  background: color-mix(in srgb, var(--card-accent) 19%, transparent);
+  color: white;
+}
+
+.project-tech {
+  border: 1px solid rgba(105, 185, 201, 0.22);
+  background: rgba(105, 185, 201, 0.1);
+  color: #bceaf1;
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.project-tech:nth-child(3n + 2) {
+  border-color: rgba(155, 140, 255, 0.24);
+  background: rgba(155, 140, 255, 0.1);
+  color: #d1caff;
+}
+
+.project-tech:nth-child(3n) {
+  border-color: rgba(84, 198, 138, 0.23);
+  background: rgba(84, 198, 138, 0.09);
+  color: #b7f0d1;
+}
+
+.project-tech:hover {
+  transform: translateY(-2px);
+  background: rgba(245, 160, 68, 0.15);
+}
+
+.contact-secondary {
+  border: 1px solid rgba(105, 185, 201, 0.24);
+  background: rgba(105, 185, 201, 0.08);
+  color: #c8edf2;
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.contact-secondary:nth-child(3) {
+  border-color: rgba(155, 140, 255, 0.28);
+  background: rgba(155, 140, 255, 0.09);
+  color: #ddd8ff;
+}
+
+.contact-secondary:nth-child(4) {
+  border-color: rgba(84, 198, 138, 0.25);
+  background: rgba(84, 198, 138, 0.08);
+  color: #c5f2da;
+}
+
+.contact-secondary:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 160, 68, 0.55);
+  background: rgba(245, 160, 68, 0.12);
+  color: white;
+}
+
+.experience-card {
+  --card-accent: #f5a044;
+  background:
+    linear-gradient(100deg, rgba(245, 160, 68, 0.055), transparent 42%),
+    var(--bg-card);
+}
+
+.experience-tag {
+  width: fit-content;
+  border: 1px solid rgba(245, 160, 68, 0.22);
+  border-radius: 0.35rem;
+  background: rgba(245, 160, 68, 0.08);
+  padding: 0.42rem 0.55rem;
+  color: #ffd19e;
+}
+
+.education-card {
+  --card-accent: #54c68a;
+  background:
+    linear-gradient(145deg, rgba(84, 198, 138, 0.08), transparent 48%),
+    var(--bg-card);
+}
+
+.about-facts {
+  --card-accent: #69b9c9;
+  background:
+    linear-gradient(145deg, rgba(105, 185, 201, 0.08), transparent 48%),
+    var(--bg-card);
+}
+
+.about-fact {
+  border-left: 2px solid rgba(105, 185, 201, 0.42);
+  padding-left: 0.8rem;
+}
+
+[data-reveal="resume"] > div > div,
+[data-reveal="contact"] dl > div {
+  border-left: 2px solid rgba(105, 185, 201, 0.26);
+  padding-left: 0.85rem;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+[data-reveal="resume"] > div > div:hover,
+[data-reveal="contact"] dl > div:hover {
+  border-color: var(--accent-warm);
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.48s ease-out,
+    transform 0.48s ease-out,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.motion-ready [data-reveal="heading"] {
+  transform: translateY(14px);
+}
+
+.motion-ready [data-reveal="timeline"] {
+  transform: translateY(18px);
+}
+
+.motion-ready [data-reveal="project"] {
+  transform: translateY(20px);
+}
+
+.motion-ready [data-reveal="resume"] {
+  transform: translateY(20px);
+}
+
+.motion-ready [data-reveal].is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-reveal="project"].is-revealed,
+[data-reveal="resume"].is-revealed {
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.22),
+    0 0 0 1px rgba(245, 160, 68, 0.04);
+}
+
+[data-reveal="metric"].is-revealed {
+  animation: metricFlash 0.55s 0.12s ease-out both;
+}
+
+[data-reveal="card"]:nth-child(2),
+[data-reveal="project"]:nth-child(2),
+[data-reveal="metric"]:nth-child(2) {
+  transition-delay: 90ms;
+}
+
+[data-reveal="card"]:nth-child(3),
+[data-reveal="metric"]:nth-child(3) {
+  transition-delay: 120ms;
+}
+
+[data-reveal="card"]:nth-child(4),
+[data-reveal="metric"]:nth-child(4) {
+  transition-delay: 150ms;
+}
+
+[data-reveal="card"]:nth-child(5) {
+  transition-delay: 180ms;
+}
+
+[data-reveal="card"]:nth-child(6) {
+  transition-delay: 210ms;
+}
+
+@keyframes revealSweep {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes metricFlash {
+  0% {
+    border-color: rgba(245, 160, 68, 0.35);
+  }
+  45% {
+    border-color: rgba(245, 160, 68, 0.95);
+    filter: brightness(1.22);
+  }
+  100% {
+    border-color: rgba(245, 160, 68, 0.35);
+    filter: brightness(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  [data-reveal],
+  [data-reveal]::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }

@@ -7,12 +7,12 @@ export default function AboutSection() {
     <PageSection id="about" ariaLabelledBy="about-heading">
       <SectionHeading
         eyebrow="About"
-        title={`${PROFILE.name} — ${PROFILE.title}`}
+        title="Java Backend Developer with 4+ years of experience"
         description={PROFILE.headline}
       />
 
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[1.4fr_1fr] md:gap-10 lg:gap-12">
-        <div className="space-y-4 font-sans text-base leading-relaxed text-[var(--text-muted)] md:text-[1.05rem] md:leading-[1.75]">
+        <div data-reveal="content" className="space-y-4 font-sans text-base leading-relaxed text-[var(--text-muted)] md:text-[1.05rem] md:leading-[1.75]">
           {ABOUT.paragraphs.map((paragraph) => (
             <p key={paragraph.slice(0, 24)} className="m-0">
               {paragraph}
@@ -24,11 +24,12 @@ export default function AboutSection() {
         </div>
 
         <aside
-          className="flex flex-col gap-5 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6"
+          data-reveal="card"
+          className="about-facts flex flex-col gap-5 rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6"
           aria-label="Quick facts"
         >
           {ABOUT.highlights.map((item) => (
-            <div key={item.label} className="flex flex-col gap-1.5">
+            <div key={item.label} data-pop className="about-fact flex flex-col gap-1.5">
               <span className="font-sans text-[0.68rem] font-medium uppercase tracking-[0.2em] text-[var(--accent-warm)]">
                 {item.label}
               </span>

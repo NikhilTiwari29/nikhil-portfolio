@@ -8,19 +8,11 @@ export default function ResumeSection() {
       <SectionHeading
         eyebrow="Resume"
         title="Resume preview"
-        description="Placeholder layout for recruiters — replace content in lib/portfolio/profile.ts and upload your PDF when ready."
+        description="A concise view of my backend engineering experience, technical range, and selected work."
       />
 
-      {RESUME.isPlaceholder ? (
-        <p
-          className="mb-6 font-sans text-sm italic text-[var(--text-muted)] md:mb-8"
-          role="status"
-        >
-          Draft content below — phone number and PDF download will be updated soon.
-        </p>
-      ) : null}
-
       <article
+        data-reveal="resume"
         className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-5 sm:p-6 md:p-8"
         aria-label="Resume document preview"
       >
@@ -66,7 +58,7 @@ export default function ResumeSection() {
         </header>
 
         <div className="mt-5 space-y-5 md:mt-6 md:space-y-6">
-          <div>
+          <div data-pop>
             <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
               Summary
             </h4>
@@ -75,7 +67,7 @@ export default function ResumeSection() {
             </p>
           </div>
 
-          <div>
+          <div data-pop>
             <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
               Experience
             </h4>
@@ -95,7 +87,7 @@ export default function ResumeSection() {
             ))}
           </div>
 
-          <div>
+          <div data-pop>
             <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
               Technical skills
             </h4>
@@ -106,7 +98,7 @@ export default function ResumeSection() {
             </ul>
           </div>
 
-          <div>
+          <div data-pop>
             <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
               Projects
             </h4>
@@ -117,7 +109,7 @@ export default function ResumeSection() {
             </ul>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
+          <div data-pop className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
             <div>
               <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
                 Education
@@ -130,38 +122,27 @@ export default function ResumeSection() {
             </div>
             <div>
               <h4 className="mb-2 font-[family-name:var(--font-syne)] text-xs font-bold uppercase tracking-wider text-[var(--accent-warm)]">
-                Certifications
+                Languages
               </h4>
-              <ul className="m-0 list-disc space-y-1 pl-5 font-sans text-[0.88rem] text-[var(--text-muted)]">
-                {RESUME.certifications.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+              <p className="m-0 font-sans text-[0.88rem] text-[var(--text-muted)]">
+                English, Hindi
+              </p>
             </div>
           </div>
         </div>
       </article>
 
-      <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
+      <div data-reveal="content" className="mt-6 flex flex-wrap gap-3 md:mt-8">
         {PROFILE.resumeUrl ? (
           <a
             href={PROFILE.resumeUrl}
             className="inline-flex items-center rounded-[0.6rem] bg-[var(--accent-warm)] px-5 py-3 font-sans text-[0.88rem] font-semibold text-[#1a0f08] no-underline"
-            download
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Download PDF
+            Open resume
           </a>
-        ) : (
-          <span className="font-sans text-[0.88rem] text-[var(--text-muted)] italic">
-            PDF download — coming soon
-          </span>
-        )}
-        <a
-          href={`mailto:${PROFILE.email}?subject=Resume%20request`}
-          className="inline-flex items-center rounded-[0.6rem] border border-[var(--border-subtle)] px-5 py-3 font-sans text-[0.88rem] font-medium text-[var(--text-primary)] no-underline hover:border-[rgba(255,138,61,0.3)]"
-        >
-          Request latest resume
-        </a>
+        ) : null}
       </div>
     </PageSection>
   );

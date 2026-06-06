@@ -1,156 +1,141 @@
-/**
- * Portfolio content — synced with LinkedIn profile.
- */
-
 const GITHUB = "https://github.com/NikhilTiwari29";
 
 export const PROFILE = {
   name: "Nikhil Tiwari",
   title: "Java Backend Developer",
   headline:
-    "4+ years building scalable, production-grade backend systems in fintech (Supply Chain Finance) — Spring Boot microservices, Apache Camel integrations, Kafka, and distributed system design.",
-  location: "Vadodara, Gujarat, India",
+    "Java Backend Developer with 4+ years of experience building scalable fintech systems with Spring Boot, Kafka, Apache Camel, microservices, and event-driven architecture.",
+  location: "Surat, Gujarat, India",
   email: "nikhiltiwarip29@gmail.com",
+  phone: "+91 9265974979",
   linkedin: "https://www.linkedin.com/in/nikhil-tiwari-0b6980212/",
   github: GITHUB,
   website: "https://nikhiltiwari.netlify.app/",
-  resumeUrl: null as string | null,
-  availability: "Open to backend engineering opportunities · 2026",
+  resumeUrl: "https://drive.google.com/file/d/1AYmf0dIvmdxh0nzoxckYpxD6VIehm1md/view?usp=sharing",
+  availability: "Open to backend engineer and backend developer opportunities",
   yearsExperience: "4+",
 } as const;
 
 export const ABOUT = {
   paragraphs: [
-    "Java Backend Developer with 4 years of experience building scalable, production-grade backend systems in the fintech domain, specifically Supply Chain Finance (SCF) at Vayana Network.",
-    "I design and develop microservices and integration layers using Spring Boot and Apache Camel — building reliable services, orchestrating external system integrations, and focusing on data consistency, fault tolerance, and system resilience.",
-    "I've decomposed monolithic applications into domain-driven microservices, implemented REST and event-driven messaging (Kafka/RabbitMQ), and built fault-tolerant pipelines with idempotent processing and retry mechanisms. I also ship batch/reporting with Quartz Scheduler, secure APIs with Spring Security & JWT, and containerized CI/CD deployments.",
+    "I build backend systems for financial workflows where reliability, security, and clear service boundaries matter. At Vayana Networks, I work on a Loan Management System covering onboarding, approvals, disbursement, repayment, and reporting.",
+    "My core work combines Java 21 and Spring Boot APIs with Apache Camel integration routes and Kafka-based asynchronous processing. I have designed reusable integrations for multiple Core Banking Systems with different contracts and authentication mechanisms.",
+    "I focus on measurable engineering outcomes. Query tuning and indexing reduced average API response times by approximately 30%, while automation and optimization initiatives reduced release effort by 40%.",
   ],
   highlights: [
-    { label: "Domain", value: "Supply Chain Finance · Fintech" },
-    { label: "Core", value: "Spring Boot · Apache Camel · Kafka" },
-    { label: "Data", value: "JPA · Hibernate · MySQL · PostGIS" },
+    { label: "Production APIs", value: "15+ REST APIs delivered" },
+    { label: "Performance", value: "~30% faster API responses" },
+    { label: "Delivery", value: "40% less release effort" },
+    { label: "Domain", value: "Loan Management and Core Banking" },
   ],
 } as const;
 
 export const SKILL_GROUPS = [
   {
-    title: "Backend & frameworks",
+    title: "Languages & core",
+    skills: ["Java 17/21", "REST APIs", "Multithreading", "OOP", "Design Patterns"],
+  },
+  {
+    title: "Frameworks",
     skills: [
-      "Java",
       "Spring Boot",
       "Spring Security",
-      "Spring Data JPA",
+      "Spring Cloud",
       "Apache Camel",
-      "REST APIs",
+      "JPA / Hibernate",
+      "OpenFeign",
     ],
   },
   {
-    title: "Architecture & messaging",
+    title: "Architecture",
     skills: [
       "Microservices",
-      "Distributed systems",
-      "Kafka",
-      "RabbitMQ",
+      "Event-driven design",
+      "API Gateway",
       "Eureka",
-      "API Gateways",
+      "Distributed systems",
+      "Strategy pattern",
     ],
   },
   {
-    title: "Data & scheduling",
-    skills: [
-      "JPA / Hibernate",
-      "MySQL",
-      "PostgreSQL",
-      "PostGIS",
-      "Quartz Scheduler",
-      "Stored procedures",
-    ],
+    title: "Data & messaging",
+    skills: ["MySQL", "MSSQL", "PostgreSQL", "PostGIS", "Redis", "Kafka"],
   },
   {
-    title: "DevOps & quality",
+    title: "DevOps & tools",
     skills: [
       "Docker",
       "Kubernetes",
-      "CI/CD",
-      "JWT",
-      "JUnit",
-      "Testcontainers",
-      "JaCoCo",
+      "AWS",
+      "GitHub Actions",
+      "Maven",
+      "Linux",
+      "Postman",
     ],
   },
   {
-    title: "Also experienced",
-    skills: [
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "React",
-      "Git",
-      "Postman",
-    ],
+    title: "Testing & quality",
+    skills: ["JUnit 5", "Mockito", "Testcontainers", "JaCoCo", "Swagger / OpenAPI"],
   },
 ] as const;
 
 export const EXPERIENCE = [
   {
-    role: "Software Engineer – Java Backend",
-    company: "Vayana Network",
-    period: "Apr 2022 — Present",
-    location: "Vadodara, Gujarat, India · Full-time",
+    role: "Software Engineer - Java Backend",
+    company: "Vayana Networks",
+    period: "Apr 2022 - Present",
+    location: "Hybrid | Vadodara | Full-time",
+    tags: ["Loan Management", "Core Banking", "Kafka", "API Security"],
     bullets: [
-      "Designed and developed microservices for core financial workflows within a Supply Chain Finance (SCF) platform using Spring Boot, contributing to decomposition of a monolithic system into scalable, loosely coupled services.",
-      "Built integration pipelines with external financial systems using Apache Camel — idempotent processing and fault-tolerant error handling via dead letter channels.",
-      "Implemented inter-service communication using REST APIs and asynchronous messaging (Kafka/RabbitMQ) for reliable, non-blocking data exchange.",
-      "Developed high-performance backend APIs for financial data processing using JPA, custom queries, and stored procedures.",
-      "Improved API performance by optimizing database queries and introducing caching on critical endpoints.",
-      "Designed scheduled batch processing and reporting pipelines using Quartz Scheduler — automated report generation and delivery via email and SFTP.",
-      "Secured microservices with Spring Security and JWT; containerized services with Docker and contributed to CI/CD pipelines.",
-      "Followed clean layered architecture (Controller, Service, Repository) and resilient integration patterns across distributed environments.",
+      "Developed 15+ REST APIs using Java 21 and Spring Boot for a Loan Management System supporting onboarding, approvals, disbursement, repayment, and reporting.",
+      "Built loan disbursement integrations using Apache Camel and Kafka, enabling asynchronous communication between the LMS and Core Banking Systems.",
+      "Designed reusable Camel routes for multi-bank integrations, supporting different CBS API contracts and authentication mechanisms.",
+      "Implemented Kafka-based bulk disbursement processing for hundreds of loan records per invoice, improving scalability and eliminating blocking workflows.",
+      "Secured 10+ APIs using Spring Security and JWT with role-based access control, token refresh workflows, and expiry management.",
+      "Optimized MSSQL queries through indexing and query tuning, reducing average API response times by approximately 30%.",
     ],
   },
 ] as const;
 
 export const EDUCATION = [
   {
-    school: "Masai School",
-    degree: "Full Stack Development · Computer Software Engineering",
-    period: "Aug 2021 — Apr 2022",
+    school: "Veer Narmad South Gujarat University",
+    location: "Surat",
+    degree: "Bachelor of Commerce (B.Com) | CGPA 7",
+    period: "2017 - 2020",
   },
   {
-    school: "Veer Narmad South Gujarat University, Surat",
-    degree: "Bachelor of Commerce (B.Com) · Accounting and Finance",
-    period: "Aug 2017 — Apr 2020",
+    school: "Masai School",
+    location: "Bengaluru",
+    degree: "Full Stack Web Development",
+    period: "2021 - 2022",
   },
 ] as const;
 
-export const CERTIFICATIONS = [
-  {
-    name: "Docker and Kubernetes",
-    issuer: "Udemy",
-    date: "Mar 2023",
-  },
-  {
-    name: "Full Stack Development",
-    issuer: "Masai",
-    date: "Jul 2022",
-  },
-] as const;
+export const CERTIFICATIONS = [] as const;
 
 export const PROJECTS = [
   {
-    title: "LinkedIn Microservices App",
+    title: "LinkedInApp Microservices",
     architecture: "Microservices" as const,
+    period: "May 2026 - Present",
+    outcome: "7 services | 50+ automated tests",
+    patterns: [
+      "Kafka event-driven pipeline",
+      "Gateway JWT and X-User-Id propagation",
+      "Neo4j social graph and OpenFeign",
+    ],
     description:
-      "Distributed LinkedIn-style backend with Spring Cloud Gateway, Eureka, and seven services — database-per-service (PostgreSQL + Neo4j), Kafka event-driven notifications, JWT auth at the gateway, Feign inter-service calls, Docker Compose, Kubernetes manifests, and CI across all services.",
+      "Distributed social networking backend with seven independently deployable services, dynamic service discovery, secure inter-service communication, asynchronous notifications, and CI-executed test coverage.",
     tech: [
       "Java 21",
-      "Spring Boot 3",
+      "Spring Boot 3.3",
       "Spring Cloud",
       "Kafka",
       "PostgreSQL",
       "Neo4j",
       "Docker",
-      "Kubernetes",
+      "JUnit 5",
     ],
     links: {
       demo: "",
@@ -159,17 +144,26 @@ export const PROJECTS = [
     featured: true,
   },
   {
-    title: "Uber App Backend",
+    title: "UberApp Backend",
     architecture: "Monolith" as const,
+    period: "May 2026 - Present",
+    outcome: "25+ endpoints | 20+ automated tests",
+    patterns: [
+      "PostGIS proximity-based allocation",
+      "Strategy pattern across 3 domains",
+      "8-stage OTP-verified ride workflow",
+    ],
     description:
-      "Spring Boot ride-booking monolith: JWT + refresh tokens, RBAC, ride lifecycle with OTP, wallet/cash payment strategies, PostGIS driver matching, ratings, Swagger UI, and tests with JUnit & Testcontainers.",
+      "Ride-booking backend covering driver matching, wallets, authentication, ratings, and role-based access for three user roles, with Testcontainers, JaCoCo, and OpenAPI documentation.",
     tech: [
       "Java 21",
-      "Spring Boot",
+      "Spring Boot 3.3",
+      "Spring Security",
       "PostgreSQL",
       "PostGIS",
       "JWT",
-      "JPA",
+      "Docker",
+      "JUnit 5",
     ],
     links: {
       demo: "",
@@ -179,46 +173,41 @@ export const PROJECTS = [
   },
 ] as const;
 
-/** Inline resume preview — replace with final copy; add public/resume.pdf when ready. */
 export const RESUME = {
-  isPlaceholder: true,
   contact: {
     email: PROFILE.email,
-    phone: "+91 9265974979",
+    phone: PROFILE.phone,
     location: PROFILE.location,
     linkedin: PROFILE.linkedin,
     github: PROFILE.github,
   },
   summary:
-    "Java Backend Developer with 4+ years of experience in fintech (Supply Chain Finance). Builds Spring Boot microservices, Apache Camel integrations, and event-driven systems with Kafka. Focused on reliability, fault tolerance, and clean API design.",
+    "Java Backend Developer with over 4 years of experience building scalable backend systems using Java, Spring Boot, Kafka, Apache Camel, and microservices. Experienced in REST APIs, Core Banking System integrations, and event-driven architectures, with measurable improvements in API performance and release effort.",
   experience: [
     {
-      role: "Software Engineer – Java Backend",
-      company: "Vayana Network",
-      period: "Apr 2022 — Present",
+      role: "Software Engineer - Java Backend",
+      company: "Vayana Networks",
+      period: "Apr 2022 - Present",
       bullets: [
-        "Microservices for SCF platform using Spring Boot.",
-        "Apache Camel integrations with idempotent, fault-tolerant pipelines.",
-        "REST + Kafka/RabbitMQ; Quartz batch jobs; JWT security; Docker & CI/CD.",
+        "Delivered 15+ REST APIs for loan onboarding, approvals, disbursement, repayment, and reporting.",
+        "Built reusable Apache Camel and Kafka integrations between LMS and Core Banking Systems.",
+        "Secured 10+ APIs and improved average API response times by approximately 30%.",
       ],
     },
   ],
   technicalSkills: [
-    "Java · Spring Boot · Spring Security · JPA/Hibernate",
-    "Apache Camel · REST APIs · Kafka · RabbitMQ",
-    "MySQL · PostgreSQL · Docker · Kubernetes · CI/CD",
+    "Java 17/21 | Spring Boot | Spring Security | Spring Cloud | Apache Camel",
+    "Microservices | REST APIs | Kafka | API Gateway | Eureka | OpenFeign",
+    "MySQL | MSSQL | PostgreSQL | Redis | Docker | Kubernetes | AWS",
   ],
   education: [
-    "Masai School — Full Stack Development (2021–2022)",
-    "Veer Narmad South Gujarat University — B.Com (2017–2020)",
+    "Veer Narmad South Gujarat University | B.Com, CGPA 7 (2017 - 2020)",
+    "Masai School | Full Stack Web Development (2021 - 2022)",
   ],
-  certifications: [
-    "Docker and Kubernetes — Udemy (2023)",
-    "Full Stack Development — Masai (2022)",
-  ],
+  certifications: [] as readonly string[],
   projects: [
-    "LinkedIn Microservices App — Spring Cloud, Kafka, PostgreSQL, Neo4j",
-    "Uber App Backend — Spring Boot monolith, PostgreSQL, PostGIS, JWT",
+    "LinkedInApp Microservices | 7 services, Kafka, Neo4j, 50+ automated tests",
+    "UberApp Backend | PostGIS matching, 25+ endpoints, 20+ automated tests",
   ],
 } as const;
 
@@ -226,7 +215,7 @@ export const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
-  { label: "Resume", href: "#resume" },
   { label: "Projects", href: "#projects" },
+  { label: "Resume", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ] as const;

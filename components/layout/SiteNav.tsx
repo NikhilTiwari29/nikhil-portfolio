@@ -63,8 +63,9 @@ export default function SiteNav() {
         <div className="flex items-center gap-2 sm:gap-3">
           <a
             href={PROFILE.resumeUrl ?? "#resume"}
+            target={PROFILE.resumeUrl ? "_blank" : undefined}
+            rel={PROFILE.resumeUrl ? "noopener noreferrer" : undefined}
             className="inline-flex items-center rounded-full border border-[rgba(255,138,61,0.35)] bg-[rgba(255,138,61,0.1)] px-3 py-2 font-sans text-[0.72rem] font-medium uppercase tracking-wider text-[#ffd4b0] no-underline transition-[background,border-color] hover:border-[rgba(255,138,61,0.55)] hover:bg-[rgba(255,138,61,0.18)] sm:px-4 sm:text-[0.78rem]"
-            {...(PROFILE.resumeUrl ? { download: true } : {})}
           >
             Resume
           </a>
