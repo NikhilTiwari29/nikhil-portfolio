@@ -17,7 +17,6 @@ import { PROFILE } from "@/lib/portfolio/profile";
 
 export default function HomeClient() {
   const [showGate, setShowGate] = useState(true);
-  const [videoReady, setVideoReady] = useState(false);
   const startVideoRef = useRef<(() => void) | null>(null);
 
   useEffect(() => {
@@ -26,11 +25,6 @@ export default function HomeClient() {
       document.body.style.overflow = "";
     };
   }, [showGate]);
-
-  useEffect(() => {
-    const fallbackTimer = window.setTimeout(() => setVideoReady(true), 4000);
-    return () => window.clearTimeout(fallbackTimer);
-  }, []);
 
   const registerVideoStart = useCallback((start: () => void) => {
     startVideoRef.current = start;
@@ -45,10 +39,10 @@ export default function HomeClient() {
 
   return (
     <>
-      {showGate && <PortfolioGate onEnter={handleEnter} videoReady={videoReady} />}
+      {showGate && <PortfolioGate onEnter={handleEnter} />}
       <MotionEffects />
       <SiteNav />
-      <VideoIntro onRegisterStart={registerVideoStart} onVideoReady={setVideoReady} />
+      <VideoIntro onRegisterStart={registerVideoStart} />
       <main className="main relative z-[2] w-full overflow-x-hidden">
         <section
           className="relative z-[3] border-y border-white/[0.08] bg-[#090a0f] px-4 py-5 sm:px-6 md:px-8 lg:px-10"

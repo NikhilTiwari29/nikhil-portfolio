@@ -5,10 +5,9 @@ import { cn } from "@/lib/utils/cn";
 
 type PortfolioGateProps = {
   onEnter: () => void;
-  videoReady?: boolean;
 };
 
-export default function PortfolioGate({ onEnter, videoReady = false }: PortfolioGateProps) {
+export default function PortfolioGate({ onEnter }: PortfolioGateProps) {
   const [exiting, setExiting] = useState(false);
   const didEnterRef = useRef(false);
 
@@ -41,11 +40,10 @@ export default function PortfolioGate({ onEnter, videoReady = false }: Portfolio
         </h2>
         <button
           type="button"
-          className="mt-6 w-full rounded-[0.6rem] bg-[var(--accent-warm)] px-5 py-3.5 font-sans text-[0.9rem] font-semibold text-[#1a0f08] transition-[filter,transform] enabled:hover:brightness-110 disabled:cursor-wait disabled:opacity-70 sm:mt-8 sm:w-auto sm:min-w-[14rem]"
+          className="mt-6 w-full rounded-[0.6rem] bg-[var(--accent-warm)] px-5 py-3.5 font-sans text-[0.9rem] font-semibold text-[#1a0f08] transition-[filter,transform] hover:brightness-110 sm:mt-8 sm:w-auto sm:min-w-[14rem]"
           onClick={handleEnter}
-          disabled={!videoReady}
         >
-          {videoReady ? "Click to enter portfolio" : "Preparing intro…"}
+          Click to enter portfolio
         </button>
       </div>
     </div>

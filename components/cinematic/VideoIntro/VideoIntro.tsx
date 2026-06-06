@@ -59,10 +59,9 @@ function applyVideoMute(video: HTMLVideoElement, muted: boolean) {
 
 type VideoIntroProps = {
   onRegisterStart?: (start: () => void) => void;
-  onVideoReady?: (ready: boolean) => void;
 };
 
-export default function VideoIntro({ onRegisterStart, onVideoReady }: VideoIntroProps) {
+export default function VideoIntro({ onRegisterStart }: VideoIntroProps) {
   const heroRef = useRef<HTMLDivElement>(null);
   const videoStageRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -187,31 +186,21 @@ export default function VideoIntro({ onRegisterStart, onVideoReady }: VideoIntro
 
     video.loop = false;
     video.removeAttribute("loop");
-    video.load();
-
-    const reportReady = () => {
-      onVideoReady?.(video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA);
-    };
 
     const onPlay = () => setIsPlaying(true);
     const onPause = () => setIsPlaying(false);
     const onVolumeChange = () => setIsMuted(video.muted);
 
-    reportReady();
-    video.addEventListener("loadeddata", reportReady);
-    video.addEventListener("canplay", reportReady);
     video.addEventListener("play", onPlay);
     video.addEventListener("pause", onPause);
     video.addEventListener("volumechange", onVolumeChange);
 
     return () => {
-      video.removeEventListener("loadeddata", reportReady);
-      video.removeEventListener("canplay", reportReady);
       video.removeEventListener("play", onPlay);
       video.removeEventListener("pause", onPause);
       video.removeEventListener("volumechange", onVolumeChange);
     };
-  }, [onVideoReady]);
+  }, []);
 
   useEffect(() => {
     const img = new Image();
