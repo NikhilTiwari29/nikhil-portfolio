@@ -30,7 +30,7 @@ export default function PortfolioGate({ onEnter }: PortfolioGateProps) {
     >
       <div className="w-full max-w-md rounded-2xl border border-white/[0.1] bg-[var(--bg-card)] p-6 text-center sm:max-w-lg sm:p-8 md:p-10">
         <p className="mb-2 font-sans text-[0.72rem] font-medium uppercase tracking-[0.28em] text-[var(--accent-warm)]">
-          Nikhil Tiwari
+          Hi, I'm Nikhil Tiwari
         </p>
         <h2
           id="portfolio-gate-title"
