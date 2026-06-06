@@ -1,4 +1,8 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
 import VideoIntro from "@/components/cinematic/VideoIntro/VideoIntro";
+import PortfolioGate from "@/components/PortfolioGate/PortfolioGate";
 import SiteFooter from "@/components/layout/SiteFooter";
 import SiteNav from "@/components/layout/SiteNav";
 import AboutSection from "@/components/sections/AboutSection";
@@ -12,11 +16,33 @@ import MotionEffects from "@/components/ui/MotionEffects";
 import { PROFILE } from "@/lib/portfolio/profile";
 
 export default function HomeClient() {
+  const [hasEntered, setHasEntered] = useState(false);
+  const [showGate, setShowGate] = useState(true);
+  const startVideoRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = showGate ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [showGate]);
+
+  const registerVideoStart = useCallback((start: () => void) => {
+    startVideoRef.current = start;
+  }, []);
+
+  const handleEnter = useCallback(() => {
+    setHasEntered(true);
+    startVideoRef.current?.();
+    window.setTimeout(() => setShowGate(false), 450);
+  }, []);
+
   return (
     <>
+      {showGate && <PortfolioGate onEnter={handleEnter} />}
       <MotionEffects />
       <SiteNav />
-      <VideoIntro enabled />
+      <VideoIntro enabled={hasEntered} onRegisterStart={registerVideoStart} />
       <main className="main relative z-[2] w-full overflow-x-hidden">
         <section
           className="relative z-[3] border-y border-white/[0.08] bg-[#090a0f] px-4 py-5 sm:px-6 md:px-8 lg:px-10"

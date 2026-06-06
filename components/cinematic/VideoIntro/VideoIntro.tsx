@@ -77,7 +77,7 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
 
   const [phase, setPhase] = useState<HeroPhase>("playing");
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [hasVisual, setHasVisual] = useState(false);
   const [videoError, setVideoError] = useState(false);
 
@@ -130,6 +130,7 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
     if (!video) return;
 
     hasPlayedRef.current = false;
+    userChoseMuteRef.current = false;
     setPhaseSync("playing");
     playVideo();
   }, [playVideo, setPhaseSync]);
@@ -166,8 +167,10 @@ export default function VideoIntro({ enabled = false, onRegisterStart }: VideoIn
 
   useEffect(() => {
     if (!enabled) return;
-    userChoseMuteRef.current = true;
-    startHeroPlayback();
+    const video = videoRef.current;
+    if (video?.paused) {
+      startHeroPlayback();
+    }
   }, [enabled, startHeroPlayback]);
 
   useEffect(() => {
