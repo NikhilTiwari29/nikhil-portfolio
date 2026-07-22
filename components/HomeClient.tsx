@@ -9,6 +9,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
 import EducationSection from "@/components/sections/EducationSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
+import InterviewSection from "@/components/sections/InterviewSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ResumeSection from "@/components/sections/ResumeSection";
 import SkillsSection from "@/components/sections/SkillsSection";
@@ -52,9 +53,9 @@ export default function HomeClient() {
           <div className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4">
             {[
               ["Experience", `${PROFILE.yearsExperience} years`],
-              ["Production", "15+ REST APIs"],
-              ["Performance", "~30% faster APIs"],
-              ["Testing", "70+ project tests"],
+              ["TravelSphere", "12 services"],
+              ["Production", "Gateway + Kafka"],
+              ["Observability", "Metrics/logs/traces"],
             ].map(([label, value]) => (
               <Card3D
                 key={label}
@@ -76,6 +77,7 @@ export default function HomeClient() {
         <SkillsSection />
         <ExperienceSection />
         <ProjectsSection />
+        <InterviewSection />
         <EducationSection />
         <ResumeSection />
         <ContactSection />

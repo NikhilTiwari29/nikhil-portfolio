@@ -4,7 +4,7 @@ export const PROFILE = {
   name: "Nikhil Tiwari",
   title: "Java Backend Developer",
   headline:
-    "Java Backend Developer with 4+ years of experience building scalable fintech systems with Spring Boot, Kafka, Apache Camel, microservices, and event-driven architecture.",
+    "Java Backend Developer with 4+ years of experience building scalable fintech systems and production-style microservice platforms with Spring Boot, Kafka, Apache Camel, Redis, Docker, observability, and cloud-ready architecture.",
   location: "Surat, Gujarat, India",
   email: "nikhiltiwarip29@gmail.com",
   phone: "+91 9265974979",
@@ -20,13 +20,13 @@ export const ABOUT = {
   paragraphs: [
     "I build backend systems for financial workflows where reliability, security, and clear service boundaries matter. At Vayana Networks, I work on a Loan Management System covering onboarding, approvals, disbursement, repayment, and reporting.",
     "My core work combines Java 21 and Spring Boot APIs with Apache Camel integration routes and Kafka-based asynchronous processing. I have designed reusable integrations for multiple Core Banking Systems with different contracts and authentication mechanisms.",
-    "I focus on measurable engineering outcomes. Query tuning and indexing reduced average API response times by approximately 30%, while automation and optimization initiatives reduced release effort by 40%.",
+    "TravelSphere extends that production experience into an interview-ready airline reservation platform with API Gateway routing, Eureka discovery, JWT security, Redis caching, Kafka event workflows, MySQL-per-service data ownership, Docker Compose infrastructure, and Grafana-based observability.",
   ],
   highlights: [
-    { label: "Production APIs", value: "15+ REST APIs delivered" },
-    { label: "Performance", value: "~30% faster API responses" },
-    { label: "Delivery", value: "40% less release effort" },
-    { label: "Domain", value: "Loan Management and Core Banking" },
+    { label: "Production APIs", value: "15+ REST APIs delivered in fintech" },
+    { label: "Primary project", value: "TravelSphere airline microservice platform" },
+    { label: "System design", value: "Gateway, discovery, events, cache, observability" },
+    { label: "Performance", value: "~30% faster APIs through query tuning" },
   ],
 } as const;
 
@@ -116,6 +116,34 @@ export const CERTIFICATIONS = [] as const;
 
 export const PROJECTS = [
   {
+    title: "TravelSphere Airline Platform",
+    architecture: "Microservices" as const,
+    period: "Jul 2026 - Present",
+    outcome: "12 services | Real-world airline workflows",
+    patterns: [
+      "Gateway routing, JWT validation, circuit breakers, and Redis token blacklist",
+      "Kafka choreography for booking, payment, seat allocation, and notifications",
+      "Service-owned MySQL databases with metrics, logs, traces, and dashboards",
+    ],
+    description:
+      "Production-grade airline reservation backend for travel search, inventory, booking, payment, and customer notifications. Built as a Maven multi-module Spring Boot platform with shared event contracts, service discovery, Dockerized infrastructure, observability, and AWS architecture documentation.",
+    tech: [
+      "Java 21",
+      "Spring Boot 4",
+      "Spring Cloud",
+      "Kafka",
+      "MySQL",
+      "Redis",
+      "Docker",
+      "AWS",
+    ],
+    links: {
+      demo: "",
+      github: `${GITHUB}/travelsphere`,
+    },
+    featured: true,
+  },
+  {
     title: "LinkedInApp Microservices",
     architecture: "Microservices" as const,
     period: "May 2026 - Present",
@@ -143,33 +171,36 @@ export const PROJECTS = [
     },
     featured: true,
   },
+] as const;
+
+export const INTERVIEW_READINESS = [
   {
-    title: "UberApp Backend",
-    architecture: "Monolith" as const,
-    period: "May 2026 - Present",
-    outcome: "25+ endpoints | 20+ automated tests",
-    patterns: [
-      "PostGIS proximity-based allocation",
-      "Strategy pattern across 3 domains",
-      "8-stage OTP-verified ride workflow",
+    title: "System design depth",
+    points: [
+      "Can explain why the platform uses API Gateway, Eureka discovery, service-owned databases, and shared DTO/event contracts.",
+      "Can discuss tradeoffs between synchronous service calls and Kafka events in booking, payment, seat, and notification flows.",
     ],
-    description:
-      "Ride-booking backend covering driver matching, wallets, authentication, ratings, and role-based access for three user roles, with Testcontainers, JaCoCo, and OpenAPI documentation.",
-    tech: [
-      "Java 21",
-      "Spring Boot 3.3",
-      "Spring Security",
-      "PostgreSQL",
-      "PostGIS",
-      "JWT",
-      "Docker",
-      "JUnit 5",
+  },
+  {
+    title: "Production operations",
+    points: [
+      "Can walk through Docker Compose environments, MySQL per service, Redis, Kafka in KRaft mode, and externalized configuration.",
+      "Can show how Actuator, Prometheus, Grafana, Loki, and Tempo make the platform observable after deployment.",
     ],
-    links: {
-      demo: "",
-      github: `${GITHUB}/uberApp-backend`,
-    },
-    featured: true,
+  },
+  {
+    title: "Security and reliability",
+    points: [
+      "Can explain gateway-level JWT validation, trusted identity headers, Redis token blacklist, and protected service routes.",
+      "Can reason about circuit breakers, payment failure events, booking status transitions, idempotency risks, and data consistency.",
+    ],
+  },
+  {
+    title: "Domain storytelling",
+    points: [
+      "Can map real airline flows: search, flight inventory, pricing, ancillaries, booking, payment, ticketing, and notification.",
+      "Can connect project decisions to real company concerns: scale, maintainability, debugging, release confidence, and ownership.",
+    ],
   },
 ] as const;
 
@@ -182,7 +213,7 @@ export const RESUME = {
     github: PROFILE.github,
   },
   summary:
-    "Java Backend Developer with over 4 years of experience building scalable backend systems using Java, Spring Boot, Kafka, Apache Camel, and microservices. Experienced in REST APIs, Core Banking System integrations, and event-driven architectures, with measurable improvements in API performance and release effort.",
+    "Java Backend Developer with over 4 years of experience building scalable backend systems using Java, Spring Boot, Kafka, Apache Camel, and microservices. Experienced in REST APIs, Core Banking System integrations, and event-driven architecture, with TravelSphere demonstrating real-world system design patterns across gateway security, discovery, messaging, caching, observability, and cloud-ready deployment.",
   experience: [
     {
       role: "Software Engineer - Java Backend",
@@ -197,8 +228,8 @@ export const RESUME = {
   ],
   technicalSkills: [
     "Java 17/21 | Spring Boot | Spring Security | Spring Cloud | Apache Camel",
-    "Microservices | REST APIs | Kafka | API Gateway | Eureka | OpenFeign",
-    "MySQL | MSSQL | PostgreSQL | Redis | Docker | Kubernetes | AWS",
+    "Microservices | REST APIs | Kafka | API Gateway | Eureka | OpenFeign | Resilience4j",
+    "MySQL | MSSQL | PostgreSQL | Redis | Docker | Prometheus | Grafana | AWS",
   ],
   education: [
     "Veer Narmad South Gujarat University | B.Com, CGPA 7 (2017 - 2020)",
@@ -206,8 +237,8 @@ export const RESUME = {
   ],
   certifications: [] as readonly string[],
   projects: [
+    "TravelSphere Airline Platform | 12 services, gateway security, Eureka, Kafka workflows, Redis, MySQL-per-service, observability",
     "LinkedInApp Microservices | 7 services, Kafka, Neo4j, 50+ automated tests",
-    "UberApp Backend | PostGIS matching, 25+ endpoints, 20+ automated tests",
   ],
 } as const;
 
@@ -216,6 +247,7 @@ export const NAV_LINKS = [
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Interview", href: "#interview" },
   { label: "Resume", href: "#resume" },
   { label: "Contact", href: "#contact" },
 ] as const;

@@ -66,6 +66,7 @@ button:focus-visible {
 }
 
 #skills,
+#interview,
 #resume {
   --section-accent: #69b9c9;
 }
@@ -82,6 +83,7 @@ button:focus-visible {
 #skills::before,
 #experience::before,
 #projects::before,
+#interview::before,
 #education::before,
 #resume::before,
 #contact::before {
@@ -95,6 +97,7 @@ button:focus-visible {
 }
 
 .skill-card,
+.interview-card,
 .experience-card,
 .education-card,
 .about-facts,
@@ -116,6 +119,7 @@ button:focus-visible {
 }
 
 .skill-card::before,
+.interview-card::before,
 .experience-card::before,
 .education-card::before,
 .about-facts::before {
@@ -128,6 +132,7 @@ button:focus-visible {
 }
 
 .skill-card::after,
+.interview-card::after,
 .experience-card::after,
 .education-card::after,
 .about-facts::after,
@@ -153,6 +158,7 @@ button:focus-visible {
 
 @media (hover: hover) and (pointer: fine) {
   .skill-card:hover::after,
+  .interview-card:hover::after,
   .experience-card:hover::after,
   .education-card:hover::after,
   .about-facts:hover::after,
@@ -171,6 +177,7 @@ button:focus-visible {
       0 10px 24px rgba(0, 0, 0, 0.2);
   }
 
+  .interview-card:hover,
   .experience-card:hover,
   .education-card:hover,
   .about-facts:hover {
@@ -270,6 +277,13 @@ button:focus-visible {
   --card-accent: #f5a044;
   background:
     linear-gradient(100deg, rgba(245, 160, 68, 0.055), transparent 42%),
+    var(--bg-card);
+}
+
+.interview-card {
+  --card-accent: #69b9c9;
+  background:
+    linear-gradient(145deg, rgba(105, 185, 201, 0.08), transparent 48%),
     var(--bg-card);
 }
 

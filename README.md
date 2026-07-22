@@ -9,7 +9,7 @@ A cinematic, recruiter-ready portfolio built with Next.js. Opens with a welcome 
 - **Portfolio gate** — Full-screen welcome overlay with a single click-to-enter action
 - **Cinematic hero** — Intro video with play/pause, mute controls, and a poster frame after playback ends
 - **Mobile-friendly playback** — Video starts on the same tap/click that dismisses the gate; falls back to muted playback with a "Tap for sound" prompt when the browser blocks audio
-- **Professional sections** — About, skills, experience, projects, education, resume, and contact
+- **Professional sections** — About, skills, experience, projects, interview readiness, education, resume, and contact
 - **SEO & sharing** — Open Graph metadata, Twitter cards, and JSON-LD structured data
 - **Motion & effects** — GSAP scroll reveals and a lightweight Three.js particle layer
 
@@ -44,7 +44,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Most copy and data lives in a single file:
 
-**`lib/portfolio/profile.ts`** — name, headline, contact links, skills, experience, projects, and education.
+**`lib/portfolio/profile.ts`** — name, headline, contact links, skills, experience, projects, interview readiness, and education.
 
 Hero-specific settings are in **`lib/cinematic/config.ts`** — video path, poster image, end trim, and on-screen name/role text.
 
@@ -115,7 +115,7 @@ If you replace the intro video, use an MP4 with H.264 video and AAC audio for th
 
 ## LinkedIn
 
-Add your live URL to LinkedIn **Featured** or **Contact info → Website** so recruiters land on the full portfolio experience.
+Add TravelSphere as the first/primary project in LinkedIn **Featured**, followed by LinkedInApp Microservices and the live portfolio URL. Keep the portfolio URL in **Contact info → Website** so recruiters land on the full portfolio experience.
 
 ## License
 
