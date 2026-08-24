@@ -4,7 +4,11 @@ import { useEffect, useState } from "react";
 import { NAV_LINKS, PROFILE } from "@/lib/portfolio/profile";
 import { cn } from "@/lib/utils/cn";
 
-export default function SiteNav() {
+type SiteNavProps = {
+  onRecruiterView?: () => void;
+};
+
+export default function SiteNav({ onRecruiterView }: SiteNavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -49,15 +53,7 @@ export default function SiteNav() {
           className="hidden items-center gap-6 md:flex lg:gap-7"
           aria-label="Primary"
         >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="font-sans text-[0.82rem] font-medium tracking-wide text-[var(--text-muted)] no-underline transition-colors hover:text-[var(--text-primary)]"
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => <a key={link.href} href={link.href} className="font-sans text-[0.82rem] font-medium tracking-wide text-[var(--text-muted)] no-underline transition-colors hover:text-[var(--text-primary)]">{link.label}</a>)}
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
@@ -69,6 +65,7 @@ export default function SiteNav() {
           >
             Resume
           </a>
+          <button type="button" onClick={onRecruiterView} className="hidden rounded-full border border-[rgba(171,123,255,0.42)] bg-[rgba(155,140,255,0.12)] px-3 py-2 font-sans text-[0.72rem] font-medium uppercase tracking-wider text-[#d6ceff] transition hover:bg-[rgba(155,140,255,0.22)] lg:inline-flex">Recruiter View</button>
 
           <button
             type="button"
@@ -111,16 +108,8 @@ export default function SiteNav() {
         aria-label="Mobile"
         aria-hidden={!menuOpen}
       >
-        {NAV_LINKS.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            onClick={closeMenu}
-            className="rounded-lg px-3 py-3 font-sans text-base font-medium text-[var(--text-muted)] no-underline transition-colors hover:bg-white/[0.04] hover:text-[var(--text-primary)]"
-          >
-            {link.label}
-          </a>
-        ))}
+        {NAV_LINKS.map((link) => <a key={link.href} href={link.href} onClick={closeMenu} className="rounded-lg px-3 py-3 font-sans text-base font-medium text-[var(--text-muted)] no-underline transition-colors hover:bg-white/[0.04] hover:text-[var(--text-primary)]">{link.label}</a>)}
+        <button type="button" onClick={() => { onRecruiterView?.(); closeMenu(); }} className="rounded-lg px-3 py-3 text-left font-sans text-base font-medium text-[#c9bfff] transition-colors hover:bg-white/[0.04] hover:text-white">Recruiter View</button>
       </nav>
     </header>
   );
