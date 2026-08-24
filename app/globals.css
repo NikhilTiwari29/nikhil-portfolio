@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #060709;
-  --bg-elevated: #0b0d10;
+  --bg-base: #07110f;
+  --bg-elevated: #0a1613;
   --bg-card: rgba(18, 20, 24, 0.88);
   --text-primary: #f7f8f5;
   --text-muted: rgba(202, 209, 214, 0.72);
-  --accent-warm: #f5a044;
-  --accent-blue: #69b9c9;
+  --accent-warm: #4fd6a1;
+  --accent-blue: #7ac5ee;
   --border-subtle: rgba(255, 255, 255, 0.08);
   --site-nav-height: 4.5rem;
 }
@@ -33,11 +33,17 @@ body {
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 56px 56px;
 }
+
+.hero-shell { min-height: min(800px, 100svh); background: radial-gradient(circle at 73% 18%, rgba(79, 214, 161, 0.12), transparent 29%), linear-gradient(180deg, rgba(7, 17, 15, 0.3), var(--bg-base)); }
+.hero-shell::after { content: ""; position: absolute; right: max(2rem, 8vw); top: 20%; width: min(28vw, 21rem); aspect-ratio: 1; border: 1px solid rgba(159, 255, 215, 0.17); border-radius: 50%; box-shadow: 0 0 0 3rem rgba(79, 214, 161, 0.024), 0 0 0 6rem rgba(79, 214, 161, 0.017); opacity: 0.75; }
+.hero-orb { position: absolute; border-radius: 999px; filter: blur(1px); pointer-events: none; }
+.hero-orb-one { width: 22rem; height: 22rem; right: -8rem; top: -4rem; background: radial-gradient(circle, rgba(79, 214, 161, 0.12), transparent 68%); }
+.hero-orb-two { width: 14rem; height: 14rem; left: -6rem; bottom: -6rem; background: radial-gradient(circle, rgba(122, 197, 238, 0.09), transparent 68%); }
+
+@media (max-width: 640px) { .hero-shell { min-height: auto; } .hero-shell::after { opacity: 0.3; right: -2rem; top: 8rem; width: 14rem; } }
 
 section {
   scroll-margin-top: var(--site-nav-height);
@@ -272,6 +278,13 @@ button:focus-visible {
   background: rgba(245, 160, 68, 0.12);
   color: white;
 }
+
+.contact-link { color: var(--text-primary); font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.9rem; text-decoration: none; overflow-wrap: anywhere; transition: color 0.2s ease; }
+.contact-link:hover { color: var(--accent-warm); }
+.contact-field { display: grid; gap: 0.55rem; color: var(--text-primary); font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.83rem; font-weight: 600; }
+.contact-field input, .contact-field textarea { width: 100%; box-sizing: border-box; border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 0.55rem; background: rgba(0, 0, 0, 0.17); color: var(--text-primary); font: inherit; font-weight: 400; padding: 0.85rem 0.95rem; outline: none; resize: vertical; transition: border-color 0.2s ease, background 0.2s ease; }
+.contact-field input::placeholder, .contact-field textarea::placeholder { color: rgba(202, 209, 214, 0.47); }
+.contact-field input:focus, .contact-field textarea:focus { border-color: var(--accent-warm); background: rgba(79, 214, 161, 0.045); }
 
 .experience-card {
   --card-accent: #f5a044;

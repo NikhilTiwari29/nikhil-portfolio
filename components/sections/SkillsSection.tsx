@@ -11,8 +11,8 @@ export default function SkillsSection() {
     <PageSection id="skills" variant="elevated" ariaLabelledBy="skills-heading">
       <SectionHeading
         eyebrow="Skills"
-        title="Backend engineering toolkit"
-        description="Technologies used across production fintech systems and independently built backend projects."
+        title="Skills & Technologies"
+        description="Tools I use to build, scale, and ship backend systems."
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">

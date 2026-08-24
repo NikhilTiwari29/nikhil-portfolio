@@ -41,6 +41,11 @@ export default function AboutSection() {
               </span>
             </div>
           ))}
+          <div className="rounded-lg border border-[rgba(79,214,161,0.22)] bg-[rgba(79,214,161,0.06)] p-4">
+            <p className="m-0 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[var(--accent-warm)]">Open to Work</p>
+            <p className="mt-2 font-sans text-[0.92rem] font-medium text-[var(--text-primary)]">Actively seeking backend engineering roles.</p>
+            <p className="mt-1 font-sans text-[0.8rem] leading-relaxed text-[var(--text-muted)]">Backend-heavy, systems-focused, high-impact preferred.</p>
+          </div>
           <a
             href="#resume"
             className="mt-2 inline-flex items-center justify-center rounded-[0.6rem] bg-[var(--accent-warm)] px-5 py-3 font-sans text-[0.88rem] font-semibold text-[#1a0f08] no-underline transition-[filter,transform] hover:-translate-y-px hover:brightness-110"

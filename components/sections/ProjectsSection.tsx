@@ -1,7 +1,7 @@
 import PageSection from "@/components/layout/PageSection";
 import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
-import { PROJECTS } from "@/lib/portfolio/profile";
+import { COMPANY_WORK, PROJECTS } from "@/lib/portfolio/profile";
 import { cn } from "@/lib/utils/cn";
 
 export default function ProjectsSection() {
@@ -12,9 +12,20 @@ export default function ProjectsSection() {
     <PageSection id="projects" variant="elevated" ariaLabelledBy="projects-heading">
       <SectionHeading
         eyebrow="Projects"
-        title="Selected backend work"
-        description="Production-style Spring Boot systems with measurable scope, architecture decisions, automated tests, and documented APIs."
+        title="Featured Work"
+        description="Production systems built at Vayana Networks — real financial workflows, real integrations, and real constraints."
       />
+
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
+        {COMPANY_WORK.map((work) => (
+          <CompanyWorkCard key={work.title} work={work} />
+        ))}
+      </div>
+
+      <div className="mt-12 border-t border-white/[0.08] pt-10 sm:mt-16 sm:pt-12">
+        <p className="m-0 font-sans text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-warm)]">Independent work</p>
+        <h3 className="mt-3 font-[family-name:var(--font-syne)] text-2xl font-bold text-[var(--text-primary)]">Architecture projects</h3>
+      </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:gap-6">
         {featured.map((project) => (
@@ -30,6 +41,28 @@ export default function ProjectsSection() {
         </div>
       ) : null}
     </PageSection>
+  );
+}
+
+type CompanyWork = (typeof COMPANY_WORK)[number];
+
+function CompanyWorkCard({ work }: { work: CompanyWork }) {
+  return (
+    <Card3D as="article" data-reveal="project" contentClassName="flex h-full flex-col" className="group overflow-hidden rounded-[0.5rem] border border-[var(--border-subtle)] bg-[var(--bg-card)] hover:border-[rgba(79,214,161,0.42)]">
+      <div className="border-b border-white/[0.07] bg-[rgba(79,214,161,0.055)] px-5 py-4 sm:px-6">
+        <p className="m-0 font-sans text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[var(--accent-warm)]">{work.category}</p>
+      </div>
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h3 className="m-0 font-[family-name:var(--font-syne)] text-lg font-bold text-[var(--text-primary)] md:text-xl">{work.title}</h3>
+        <p className="mb-5 mt-3 flex-1 font-sans text-[0.95rem] leading-relaxed text-[var(--text-muted)]">{work.description}</p>
+        <ul className="mb-5 grid list-none gap-2 border-l border-[rgba(79,214,161,0.48)] pl-3" aria-label="Impact">
+          {work.impact.map((item) => <li key={item} className="font-sans text-[0.78rem] font-medium text-[var(--text-primary)]">{item}</li>)}
+        </ul>
+        <ul className="m-0 flex list-none flex-wrap gap-2 p-0" aria-label="Technologies">
+          {work.tech.map((tech) => <li key={tech} className="project-tech rounded-md px-2 py-1 font-sans text-[0.72rem] font-medium">{tech}</li>)}
+        </ul>
+      </div>
+    </Card3D>
   );
 }
 
