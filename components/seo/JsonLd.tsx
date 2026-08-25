@@ -32,9 +32,10 @@ export default function JsonLd() {
       "Kafka",
       "MSSQL",
       "AWS",
-      "PostgreSQL",
-      "PostGIS",
-      "JWT Authentication",
+      "Supply Chain Finance",
+      "Loan Management System",
+      "Core Banking Systems",
+      "Spring AI",
     ],
   };
 

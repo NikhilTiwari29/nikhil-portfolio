@@ -4,7 +4,7 @@ export const PROFILE = {
   name: "Nikhil Tiwari",
   title: "Java Backend Developer",
   headline:
-    "Java Backend Developer with 4+ years of experience building scalable fintech systems at Vayana Networks. I work with Spring Boot, Kafka, Apache Camel, Redis, Docker, observability, and cloud-ready architecture to deliver reliable financial workflows.",
+    "Java Backend Developer with 4+ years of experience building backend applications, microservices, and REST APIs for Loan Management and Supply Chain Finance workflows. I work with Java 21, Spring Boot, Kafka, Apache Camel, and AWS to deliver reliable fintech systems.",
   location: "Surat, Gujarat, India",
   email: "nikhiltiwarip29@gmail.com",
   phone: "+91 9265974979",
@@ -18,15 +18,15 @@ export const PROFILE = {
 
 export const ABOUT = {
   paragraphs: [
-    "I build backend systems for financial workflows where reliability, security, and clear service boundaries matter. At Vayana Networks, I work on a Loan Management System covering onboarding, approvals, disbursement, repayment, reporting, and master-data setup.",
-    "My core work combines Java 21 and Spring Boot APIs with Apache Camel integration routes and Kafka-based asynchronous processing. I have designed reusable integrations for multiple Core Banking Systems with different contracts and authentication mechanisms.",
-    "I also built a dedicated report-generation microservice with AWS functionality for dependable report downloads. I use AI-assisted tools such as Claude Code, Cursor AI, and GitHub Copilot to accelerate boilerplate, explore APIs, and review edge cases—without treating them as a substitute for engineering judgment.",
-    "I also work with Spring AI, including AI agents, OpenAI integrations, RAG, MCP, AI testing, observability, and speech or image-generation capabilities. Now I'm looking for a backend-heavy role where I can go deeper: bigger systems, harder problems, and stronger engineering teams.",
+    "I build backend systems for financial workflows where reliability, security, and clear service boundaries matter. At Vayana Networks, I develop Loan Management System and Supply Chain Finance workflows covering loan onboarding, approval, disbursement, repayment, loan servicing, and reporting.",
+    "My core work combines Java 21 and Spring Boot APIs with Apache Camel integration routes and Kafka-based asynchronous processing. I design reusable integrations for multiple Core Banking Systems with different contracts and authentication mechanisms.",
+    "I implement financial business rules including SMA/NPA classification, interest accrual, excess-upfront handling, and repayment processing. I also handle high-volume asynchronous processing—disbursement and repayment batches with 1,000+ loan records per invoice or batch.",
+    "I'm currently developing skills in Spring AI, RAG, MCP, and AI agents. I'm looking for a backend-heavy role where I can go deeper on bigger systems, harder problems, and stronger engineering teams.",
   ],
   highlights: [
-    { label: "Production APIs", value: "15+ REST APIs delivered in fintech" },
-    { label: "Reporting service", value: "Dedicated report downloads with AWS functionality" },
-    { label: "System design", value: "Gateway, discovery, events, cache, observability" },
+    { label: "Production APIs", value: "15+ REST APIs for LMS & SCF workflows" },
+    { label: "SCF disbursements", value: "₹50+ crore via Kafka async processing" },
+    { label: "Bulk processing", value: "1,000+ loan records per invoice or batch" },
     { label: "Performance", value: "~30% faster APIs through query tuning" },
   ],
 } as const;
@@ -34,68 +34,76 @@ export const ABOUT = {
 export const SKILL_GROUPS = [
   {
     title: "Languages & core",
-    skills: ["Java 17/21", "REST APIs", "Multithreading", "OOP", "Design Patterns"],
+    skills: ["Java 17/21", "SQL", "REST APIs"],
   },
   {
-    title: "Frameworks",
+    title: "Backend",
     skills: [
       "Spring Boot",
       "Spring Security",
-      "Spring Cloud",
-      "Spring AI",
       "Apache Camel",
       "JPA / Hibernate",
       "OpenFeign",
     ],
   },
   {
+    title: "Messaging & caching",
+    skills: ["Apache Kafka", "Redis"],
+  },
+  {
+    title: "Databases",
+    skills: ["MSSQL", "MySQL"],
+  },
+  {
     title: "Architecture",
     skills: [
       "Microservices",
-      "Event-driven design",
-      "API Gateway",
-      "Eureka",
+      "Event-driven architecture",
       "Distributed systems",
-      "Strategy pattern",
     ],
   },
   {
-    title: "Data & messaging",
-    skills: ["MySQL", "MSSQL", "PostgreSQL", "PostGIS", "Redis", "Kafka"],
+    title: "Testing",
+    skills: ["JUnit 5", "Mockito"],
   },
   {
-    title: "DevOps & tools",
+    title: "Cloud & DevOps",
+    skills: ["AWS", "Docker", "GitHub Actions", "Maven", "Linux"],
+  },
+  {
+    title: "Tools",
+    skills: ["Git", "GitHub", "Postman", "Cursor"],
+  },
+  {
+    title: "AI & GenAI",
     skills: [
-      "Docker",
-      "Kubernetes",
-      "AWS",
-      "GitHub Actions",
-      "Maven",
-      "Linux",
-      "Postman",
+      "Spring AI",
+      "AI Agents",
+      "RAG",
+      "MCP",
+      "OpenAI APIs",
+      "AI Testing",
+      "AI Observability",
     ],
-  },
-  {
-    title: "Testing & quality",
-    skills: ["JUnit 5", "Mockito", "Testcontainers", "JaCoCo", "Swagger / OpenAPI"],
   },
 ] as const;
 
 export const EXPERIENCE = [
   {
-    role: "Software Engineer - Java Backend",
+    role: "Software Engineer – Java Backend",
     company: "Vayana Networks",
     period: "Apr 2022 - Present",
     location: "Hybrid | Vadodara | Full-time",
-    tags: ["Loan Management", "Core Banking", "Kafka", "API Security"],
+    tags: ["LMS", "Supply Chain Finance", "Kafka", "Core Banking"],
     bullets: [
-      "Developed 15+ REST APIs using Java 21 and Spring Boot for a Loan Management System covering onboarding, approvals, disbursement, repayment, reporting, and master-data setup.",
-      "Built Apache Camel and Kafka integrations between the LMS and multiple Core Banking Systems, enabling asynchronous financial workflows.",
-      "Designed reusable Camel routes that support different CBS API contracts and authentication mechanisms across banks.",
-      "Implemented Kafka-based bulk disbursement processing for 50K+ loan records, including invoices containing up to 1,000 records, eliminating blocking workflows.",
-      "Built a dedicated report-generation microservice with AWS functionality for dependable financial-report downloads.",
-      "Secured 10+ APIs using Spring Security and JWT, with role-based access control, token refresh, and expiry management.",
-      "Optimized MSSQL queries with indexing and query tuning, improving average API response times by approximately 30%.",
+      "Developed 15+ production REST APIs using Java 21 and Spring Boot for LMS and SCF workflows covering onboarding, approval, disbursement, repayment, and reporting.",
+      "Built an SCF disbursement service processing 1,000+ loan records per invoice and supporting ₹50+ crore in disbursements using Kafka-based asynchronous processing.",
+      "Developed a bulk repayment service processing 1,000+ loan records per batch using Kafka, enabling asynchronous repayment processing without blocking LMS workflows.",
+      "Developed loan servicing workflows covering SMA/NPA classification, interest accrual, excess-upfront handling, and repayment processing for accurate loan lifecycle management.",
+      "Implemented asynchronous transaction processing using Apache Kafka for high-volume SCF disbursement and repayment transactions without blocking LMS workflows on downstream bank CBS responses.",
+      "Developed reusable Apache Camel integration flows for multi-bank CBS integrations, handling authentication, bank-specific request/response transformation, validation, retries, error handling, and response processing.",
+      "Implemented the LMS → Kafka → Camel → CBS transaction flow, including transaction validation, bank-specific payload transformation, downstream response handling, and transaction status updates.",
+      "Optimized MSSQL queries and indexes across transaction-heavy LMS workflows, reducing API response times by approximately 30%.",
     ],
   },
 ] as const;
@@ -111,7 +119,7 @@ export const EDUCATION = [
     school: "Masai School",
     location: "Bengaluru",
     degree: "Full Stack Web Development",
-    period: "2021 - 2022",
+    period: "",
   },
 ] as const;
 
@@ -178,31 +186,31 @@ export const PROJECTS = [
 
 export const INTERVIEW_READINESS = [
   {
+    title: "Fintech domain depth",
+    points: [
+      "Can explain LMS and SCF workflows: onboarding, approval, disbursement, repayment, loan servicing, and reporting.",
+      "Can discuss SMA/NPA classification, interest accrual, excess-upfront handling, and invoice-driven processing with 1,000+ loan records.",
+    ],
+  },
+  {
+    title: "Integration & events",
+    points: [
+      "Can walk through the LMS → Kafka → Camel → CBS transaction flow with bank-specific payload transformation and retries.",
+      "Can discuss tradeoffs between synchronous CBS calls and Kafka-based async processing for high-volume disbursements.",
+    ],
+  },
+  {
     title: "System design depth",
     points: [
-      "Can explain why the platform uses API Gateway, Eureka discovery, service-owned databases, and shared DTO/event contracts.",
-      "Can discuss tradeoffs between synchronous service calls and Kafka events in booking, payment, seat, and notification flows.",
+      "Can explain why side projects use API Gateway, Eureka discovery, service-owned databases, and shared DTO/event contracts.",
+      "Can discuss tradeoffs between synchronous service calls and Kafka events in booking, payment, and notification flows.",
     ],
   },
   {
     title: "Production operations",
     points: [
-      "Can walk through Docker Compose environments, MySQL per service, Redis, Kafka in KRaft mode, and externalized configuration.",
-      "Can show how Actuator, Prometheus, Grafana, Loki, and Tempo make the platform observable after deployment.",
-    ],
-  },
-  {
-    title: "Security and reliability",
-    points: [
-      "Can explain gateway-level JWT validation, trusted identity headers, Redis token blacklist, and protected service routes.",
-      "Can reason about circuit breakers, payment failure events, booking status transitions, idempotency risks, and data consistency.",
-    ],
-  },
-  {
-    title: "Domain storytelling",
-    points: [
-      "Can map real airline flows: search, flight inventory, pricing, ancillaries, booking, payment, ticketing, and notification.",
-      "Can connect project decisions to real company concerns: scale, maintainability, debugging, release confidence, and ownership.",
+      "Can walk through Docker Compose environments, per-service databases, Redis, Kafka in KRaft mode, and externalized configuration.",
+      "Can show how Actuator, Prometheus, Grafana, Loki, and Tempo make platforms observable after deployment.",
     ],
   },
 ] as const;
@@ -216,28 +224,29 @@ export const RESUME = {
     github: PROFILE.github,
   },
   summary:
-    "Java Backend Developer with over 4 years of experience building scalable fintech systems at Vayana Networks using Java, Spring Boot, Kafka, Apache Camel, and microservices. Experienced in REST APIs, Core Banking System integrations, report-generation services with AWS functionality, and event-driven loan workflows.",
+    "Java Backend Developer with 4+ years of experience building backend applications, microservices, and REST APIs using Java 21, Spring Boot, Kafka, Apache Camel, and SQL. Experienced in LMS and Supply Chain Finance workflows, multi-bank Core Banking System integrations, event-driven architecture, and database optimization. Currently developing skills in Spring AI, RAG, MCP, and AI agents.",
   experience: [
     {
-      role: "Software Engineer - Java Backend",
+      role: "Software Engineer – Java Backend",
       company: "Vayana Networks",
       period: "Apr 2022 - Present",
       bullets: [
-        "Delivered 15+ REST APIs for onboarding, approvals, disbursement, repayment, reporting, and master-data setup.",
-        "Built reusable Apache Camel and Kafka integrations between the LMS and multiple Core Banking Systems.",
-        "Implemented bulk processing for 50K+ loan records and a report-generation microservice with AWS functionality.",
-        "Secured 10+ APIs and improved average API response times by approximately 30%.",
+        "Developed 15+ production REST APIs for LMS and SCF workflows covering onboarding, approval, disbursement, repayment, and reporting.",
+        "Built SCF disbursement and bulk repayment services processing 1,000+ loan records per invoice or batch with Kafka async processing.",
+        "Developed reusable Apache Camel flows for multi-bank CBS integrations and the LMS → Kafka → Camel → CBS transaction pipeline.",
+        "Implemented loan servicing workflows and optimized MSSQL queries, reducing API response times by approximately 30%.",
       ],
     },
   ],
   technicalSkills: [
-    "Java 17/21 | Spring Boot | Spring Security | Spring Cloud | Spring AI | Apache Camel",
-    "Microservices | REST APIs | Kafka | API Gateway | Eureka | OpenFeign | Resilience4j",
-    "MySQL | MSSQL | PostgreSQL | Redis | Docker | Prometheus | Grafana | AWS",
+    "Java 17/21 | SQL | Spring Boot | Spring Security | Apache Camel | JPA/Hibernate | OpenFeign | REST APIs",
+    "Apache Kafka | Redis | Microservices | Event-Driven Architecture | Distributed Systems",
+    "MSSQL | MySQL | AWS | Docker | GitHub Actions | Maven | Linux | JUnit 5 | Mockito",
+    "Spring AI | AI Agents | RAG | MCP | OpenAI APIs | AI Testing | AI Observability",
   ],
   education: [
     "Veer Narmad South Gujarat University | B.Com, CGPA 7 (2017 - 2020)",
-    "Masai School | Full Stack Web Development (2021 - 2022)",
+    "Masai School | Full Stack Web Development",
   ],
   certifications: [] as readonly string[],
   projects: [
@@ -259,50 +268,50 @@ export const NAV_LINKS = [
 export const COMPANY_WORK = [
   {
     category: "Fintech · Vayana Networks",
-    title: "Loan Management System APIs",
+    title: "Loan Management System – Supply Chain Finance",
     description:
-      "Backend APIs for the full loan lifecycle: onboarding, approvals, disbursement, repayment, reporting, and master-data setup. Built with Java 21 and Spring Boot for secure, dependable financial workflows.",
+      "Production REST APIs for LMS and SCF workflows covering onboarding, approval, disbursement, repayment, and reporting. Built with Java 21 and Spring Boot for secure, dependable financial operations.",
     impact: [
-      "15+ REST APIs delivered across core loan and master-data workflows",
-      "10+ APIs protected with JWT and role-based access control",
-      "~30% faster response times through MSSQL query tuning",
+      "15+ REST APIs delivered across core loan and SCF workflows",
+      "SCF disbursement service supporting ₹50+ crore in disbursements",
+      "Bulk repayment processing with 1,000+ loan records per batch",
     ],
     tech: ["Java 21", "Spring Boot", "Spring Security", "MSSQL", "REST APIs"],
   },
   {
-    category: "Integration · Vayana Networks",
-    title: "Core Banking Integration Layer",
+    category: "Loan servicing · Vayana Networks",
+    title: "Loan Lifecycle & Business Rules",
     description:
-      "Reusable Apache Camel integration routes connecting the Loan Management System with multiple Core Banking Systems, each with different API contracts and authentication requirements.",
+      "Loan servicing workflows covering SMA/NPA classification, interest accrual, excess-upfront handling, and repayment processing for accurate loan lifecycle management.",
+    impact: [
+      "SMA/NPA classification and interest accrual automation",
+      "Excess-upfront handling and repayment processing",
+      "Accurate loan lifecycle management across servicing stages",
+    ],
+    tech: ["Java 21", "Spring Boot", "JPA / Hibernate", "MSSQL", "REST APIs"],
+  },
+  {
+    category: "Integration · Vayana Networks",
+    title: "SCF Transaction & Bank Integration Platform",
+    description:
+      "Reusable Apache Camel integration flows for multi-bank CBS integrations, implementing the LMS → Kafka → Camel → CBS transaction pipeline with bank-specific transformation, retries, and error handling.",
     impact: [
       "Reusable routes support multiple bank integrations",
-      "Asynchronous processing with Kafka reduces blocking workflows",
-      "Consistent handling for contracts and authentication variations",
+      "Asynchronous Kafka processing reduces blocking on CBS responses",
+      "Invoice-driven SCF processing with 1,000+ loan records per invoice",
     ],
-    tech: ["Apache Camel", "Kafka", "Spring Boot", "Core Banking", "JWT"],
+    tech: ["Apache Camel", "Kafka", "Spring Boot", "Core Banking", "Docker", "AWS"],
   },
   {
-    category: "Event-driven · Vayana Networks",
-    title: "Bulk Loan Disbursement Processing",
+    category: "Performance · Vayana Networks",
+    title: "Database Optimization",
     description:
-      "Kafka-based processing for high-volume loan disbursements, designed to move hundreds of records per invoice through a scalable asynchronous workflow.",
+      "Query and index optimization across transaction-heavy LMS workflows, improving API response times for high-volume disbursement and repayment operations.",
     impact: [
-      "Processes 50K+ loan records, including invoices with up to 1,000 records",
-      "Eliminated blocking request-response processing",
-      "Built for scalable, recoverable financial operations",
+      "~30% reduction in average API response times",
+      "Optimized MSSQL queries and indexes for transaction-heavy workflows",
+      "Improved performance across core loan and SCF operations",
     ],
-    tech: ["Kafka", "Java 21", "Spring Boot", "Apache Camel", "MSSQL"],
-  },
-  {
-    category: "Reporting · Vayana Networks",
-    title: "Report Generation Microservice",
-    description:
-      "A dedicated microservice for generating and downloading financial reports, with AWS functionality supporting dependable report delivery outside the core loan-management request path.",
-    impact: [
-      "Separated report-download concerns from core business workflows",
-      "Supports reporting needs across the loan-management domain",
-      "Designed with cloud-ready AWS functionality",
-    ],
-    tech: ["Java 21", "Spring Boot", "Microservices", "AWS", "Reporting"],
+    tech: ["MSSQL", "Java 21", "Spring Boot", "JPA / Hibernate"],
   },
 ] as const;

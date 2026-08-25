@@ -9,7 +9,7 @@ export default function ExperienceSection() {
       <SectionHeading
         eyebrow="Experience"
         title="Where I've built & shipped"
-        description={`${PROFILE.yearsExperience} years building loan management APIs, Core Banking integrations, and event-driven financial workflows.`}
+        description={`${PROFILE.yearsExperience} years building LMS and Supply Chain Finance APIs, multi-bank CBS integrations, and event-driven financial workflows.`}
       />
 
       <ol className="m-0 list-none p-0">

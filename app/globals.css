@@ -216,6 +216,10 @@ button:focus-visible {
     transform 0.25s ease;
 }
 
+.skill-pill svg {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, currentColor 35%, transparent));
+}
+
 .skill-pill:hover {
   transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--card-accent) 58%, transparent);

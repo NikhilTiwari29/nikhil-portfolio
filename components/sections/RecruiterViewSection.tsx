@@ -1,14 +1,15 @@
 "use client";
 
 import { useEffect } from "react";
+import { getSkillIcon } from "@/lib/portfolio/skill-icons";
 import { PROFILE } from "@/lib/portfolio/profile";
 
-const skills = ["Java", "Spring Boot", "Kafka", "Apache Camel", "Microservices", "AWS", "MSSQL", "Redis", "Docker", "Spring AI"];
+const skills = ["Java 21", "Spring Boot", "Kafka", "Apache Camel", "Microservices", "REST APIs", "AWS", "MSSQL", "Redis", "Spring AI"];
 const achievements = [
-  "Delivered 15+ REST APIs across loan onboarding, approval, disbursement, repayment, reporting, and master-data setup.",
-  "Built 10+ backend services and reusable Core Banking integrations with Apache Camel and Kafka.",
-  "Implemented scalable bulk processing for 50K+ loan records, including invoices with up to 1,000 records.",
-  "Built a dedicated report-generation microservice with AWS functionality and improved API response times by ~30%.",
+  "Delivered 15+ production REST APIs for LMS and Supply Chain Finance workflows at Vayana Networks.",
+  "Built SCF disbursement and bulk repayment services processing 1,000+ loan records per invoice or batch via Kafka.",
+  "Developed reusable Apache Camel flows for multi-bank CBS integrations with the LMS → Kafka → Camel → CBS pipeline.",
+  "Implemented loan servicing workflows and optimized MSSQL queries, improving API response times by ~30%.",
 ] as const;
 
 type RecruiterViewProps = { isOpen: boolean; onClose: () => void };
@@ -37,10 +38,18 @@ export default function RecruiterViewSection({ isOpen, onClose }: RecruiterViewP
             <p className="text-[var(--text-muted)]">Everything you need in 60 seconds.</p>
             <h3 className="mt-6 font-[family-name:var(--font-syne)] text-lg font-bold text-white">Profile Snapshot</h3>
             <dl className="mt-5 grid gap-px overflow-hidden rounded-xl border border-white/[0.1] bg-white/[0.1] sm:grid-cols-2">
-              {[["Current role", "Software Engineer — Java Backend @ Vayana Networks"], ["Experience", "4+ Years Backend Engineering"], ["Primary stack", "Java · Spring Boot · Kafka · Apache Camel · AWS"], ["Services built", "10+ backend services"], ["Location", "Surat, India · Open to any location"], ["Status", "Actively Seeking New Role"]].map(([label, value]) => <div key={label} className="bg-[rgba(9,15,14,0.78)] p-4"><dt className="text-[0.66rem] font-semibold uppercase tracking-[0.15em] text-white/45">{label}</dt><dd className="mt-1.5 text-sm font-medium leading-6 text-white">{value}</dd></div>)}
+              {[["Current role", "Software Engineer — Java Backend @ Vayana Networks"], ["Experience", "4+ Years Backend Engineering"], ["Primary stack", "Java 21 · Spring Boot · Kafka · Apache Camel · AWS"], ["Production APIs", "15+ REST APIs for LMS & SCF"], ["Location", "Surat, India · Open to any location"], ["Status", "Actively Seeking New Role"]].map(([label, value]) => <div key={label} className="bg-[rgba(9,15,14,0.78)] p-4"><dt className="text-[0.66rem] font-semibold uppercase tracking-[0.15em] text-white/45">{label}</dt><dd className="mt-1.5 text-sm font-medium leading-6 text-white">{value}</dd></div>)}
             </dl>
             <h3 className="mt-8 font-[family-name:var(--font-syne)] text-lg font-bold text-white">Core Skills</h3>
-            <ul className="mt-4 flex list-none flex-wrap gap-2 p-0">{skills.map((skill) => <li key={skill} className="rounded-md border border-[rgba(171,123,255,0.25)] bg-[rgba(171,123,255,0.09)] px-2.5 py-1.5 text-xs font-medium text-[#ded9ff]">{skill}</li>)}</ul>
+            <ul className="mt-4 flex list-none flex-wrap gap-2 p-0">{skills.map((skill) => {
+              const { icon: Icon, color } = getSkillIcon(skill);
+              return (
+                <li key={skill} className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(171,123,255,0.25)] bg-[rgba(171,123,255,0.09)] px-2.5 py-1.5 text-xs font-medium text-[#ded9ff]">
+                  <Icon className="h-3.5 w-3.5 shrink-0" style={{ color }} aria-hidden />
+                  {skill}
+                </li>
+              );
+            })}</ul>
           </div>
           <div>
             <h3 className="font-[family-name:var(--font-syne)] text-lg font-bold text-white">Key Achievements</h3>

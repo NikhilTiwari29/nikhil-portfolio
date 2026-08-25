@@ -17,9 +17,9 @@ import { PROFILE } from "@/lib/portfolio/profile";
 
 const metrics = [
   ["4+", "Years experience"],
-  ["10+", "Services built"],
-  ["6+", "AWS services"],
-  ["50K+", "Loan records processed"],
+  ["15+", "Production REST APIs"],
+  ["₹50+ Cr", "SCF disbursements processed"],
+  ["~30%", "API response improvement"],
 ] as const;
 
 export default function HomeClient() {
@@ -42,7 +42,7 @@ export default function HomeClient() {
               {PROFILE.name}
             </h1>
             <p className="mt-6 max-w-3xl font-[family-name:var(--font-syne)] text-[clamp(1.08rem,2.4vw,1.55rem)] font-semibold leading-tight text-[#a3f4cf]">
-              Java <span className="text-white/35">·</span> Spring Boot <span className="text-white/35">·</span> Kafka <span className="text-white/35">·</span> Apache Camel <span className="text-white/35">·</span> Microservices
+              Java 21 <span className="text-white/35">·</span> Spring Boot <span className="text-white/35">·</span> Kafka <span className="text-white/35">·</span> Apache Camel <span className="text-white/35">·</span> Microservices <span className="text-white/35">·</span> REST APIs
             </p>
             <p className="mt-6 max-w-3xl text-[1rem] leading-8 text-[var(--text-muted)] sm:text-[1.08rem]">
               {PROFILE.headline}

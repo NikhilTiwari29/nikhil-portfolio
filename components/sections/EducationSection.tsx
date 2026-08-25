@@ -27,7 +27,7 @@ export default function EducationSection() {
               {item.degree}
             </p>
             <div className="mt-4 flex flex-wrap gap-x-3 gap-y-1 font-sans text-[0.8rem] text-[var(--accent-warm)]">
-              <time>{item.period}</time>
+              {item.period ? <time>{item.period}</time> : null}
               <span>{item.location}</span>
             </div>
           </Card3D>

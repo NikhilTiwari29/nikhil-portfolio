@@ -1,10 +1,11 @@
 import PageSection from "@/components/layout/PageSection";
 import Card3D from "@/components/ui/Card3D";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { getSkillIcon } from "@/lib/portfolio/skill-icons";
 import { SKILL_GROUPS } from "@/lib/portfolio/profile";
 import type { CSSProperties } from "react";
 
-const GROUP_COLORS = ["#69b9c9", "#f5a044", "#9b8cff", "#54c68a", "#ef7fa6", "#d8b65c"];
+const GROUP_COLORS = ["#69b9c9", "#f5a044", "#9b8cff", "#54c68a", "#ef7fa6", "#d8b65c", "#69b9c9", "#f5a044", "#9b8cff"];
 
 export default function SkillsSection() {
   return (
@@ -28,13 +29,21 @@ export default function SkillsSection() {
               {group.title}
             </h3>
             <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-              {group.skills.map((skill) => (
-                <li key={skill} data-pop>
-                  <span className="skill-pill inline-block rounded-md px-2.5 py-1.5 font-sans text-[0.78rem] font-medium">
-                    {skill}
-                  </span>
-                </li>
-              ))}
+              {group.skills.map((skill) => {
+                const { icon: Icon, color } = getSkillIcon(skill);
+                return (
+                  <li key={skill} data-pop>
+                    <span className="skill-pill inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 font-sans text-[0.78rem] font-medium">
+                      <Icon
+                        className="h-3.5 w-3.5 shrink-0"
+                        style={{ color }}
+                        aria-hidden
+                      />
+                      {skill}
+                    </span>
+                  </li>
+                );
+              })}
             </ul>
           </Card3D>
         ))}
